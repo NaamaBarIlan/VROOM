@@ -1,9 +1,9 @@
 # VROOM
 
 ## Virtual Regional Open Office Manager
----
 
 ---
+
 ## API Server Application
 
 The web application consists of a backend written in C# using ASP.NET Core, Entity Framework Core, and the MVC framework.
@@ -46,28 +46,28 @@ $ git clone https://github.com/NaamaBarIlan/VROOM.git
 
 
 ### Overview of Recent Posts
-![Overview of Recent Posts](https://via.placeholder.com/500x250)
+![Overview of Recent Posts]()
 
 ### Creating a Post
-![Post Creation](https://via.placeholder.com/500x250)
+![Post Creation]()
 
 ### Enriching a Post
-![Enriching Post](https://via.placeholder.com/500x250)
+![Enriching Post]()
 
 ### Viewing Post Details
-![Details of Post](https://via.placeholder.com/500x250)
+![Details of Post]()
 
 ---
 ## Data Flow (Frontend, Backend, REST API)
 
-![Data Flow Diagram](/assets/img/Flowchart.png)
+![Data Flow Diagram]()
 
 ---
 ## Data Model
 
 ### Overall Project Schema
 
-![Database Schema](/assets/img/ERD.png)
+![Database Schema]()
 
 ---
 ## Model Properties and Requirements
@@ -77,10 +77,6 @@ $ git clone https://github.com/NaamaBarIlan/VROOM.git
 
 
 ### User
-
-| Parameter | Type | Required |
-| --- | --- | --- |
-
 
 ---
 
