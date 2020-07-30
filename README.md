@@ -121,8 +121,9 @@ Unit testing is included in the AmandaFE/FrontendTesting project using the xUnit
 ---
 
 ## Authors
-Michael Refvem
-Paul M Rest
-Na'ama Bar-Ilan
+
+* Michael Refvem
+* Paul M Rest
+* Na'ama Bar-Ilan
 
 ---
