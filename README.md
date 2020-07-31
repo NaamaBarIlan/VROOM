@@ -27,62 +27,34 @@ Microsoft Visual Studio Community 2019
 
 ---
 
-## Recent Updates
+## Software Requirements
 
 
----
-
-## Getting Started
-
-Clone this repository to your local machine.
-
-```
-$ git clone https://github.com/NaamaBarIlan/VROOM.git
-```
 
 ---
+## Domain Model
 
-## Usage
 
-
-### Overview of Recent Posts
-![Overview of Recent Posts]()
-
-### Creating a Post
-![Post Creation]()
-
-### Enriching a Post
-![Enriching Post]()
-
-### Viewing Post Details
-![Details of Post]()
+![Domain Model](https://github.com/NaamaBarIlan/VROOM/blob/Staging/Assets/VROOM%20UMD.png)
 
 ---
-## Data Flow (Frontend, Backend, REST API)
-
-![Data Flow Diagram]()
-
----
-## Data Model
 
 ### Overall Project Schema
 
-![Database Schema]()
+![Database Schema](https://github.com/NaamaBarIlan/VROOM/blob/Staging/Assets/VROOM%20ERD.png)
 
 ---
-## Model Properties and Requirements
 
 
-### Blog
+## User Stories
 
-
-### User
+User stories can be found in this [link](https://trello.com/b/x6A2dKi8/vroom-401-cf) to the project management board.
 
 ---
 
 ## Change Log
 
-1.1: ** - 30 Jul 2020  
+1.1: *Added an ERD and UMD images, software requirements and a link to user stories in a project management board* - 31 Jul 2020  
 
 ---
 
