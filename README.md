@@ -48,7 +48,9 @@ VROOM offers companies the ability to track personnel flexible schedules more ea
 
 ### Data Flow
 There will be a controller for each entity implemented, which will take in a DTO object (when necessary) through an API route, and return data.
+
 Each controller will use dependency injection to access a service object which will perform the actual database operations, and return DTO data back to the controller. The controller will not have access to actual entity data, but will only work with DTOs.
+
 When a user signs in, they will create a token, and use that token to access the API data they have permission to access.
 
 ### Non-Functional Requirements 
