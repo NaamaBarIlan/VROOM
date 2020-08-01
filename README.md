@@ -26,12 +26,13 @@ VROOM offers companies the ability to track personnel flexible schedules more ea
   * Won’t manage the hiring process
 
 ###  Minimum Viable Product 
-* Able to view, update, create, and delete employee, equipment, and schedule data as appropriate with the user’s permissions. 
+* Able to view, update, create, and delete employee,  equipment, and employee-equipment as appropriate with the user’s permissions. 
 
 * Include unit tests for all application services. 
 
 ### Stretch Goals
 
+* Able to view, update, create, and delete schedules and employee-schedules. 
 * Allow employees to have a different start/end time for each day of the week
 * Create a separate entity for Branches separate from employees
 * Create a separate entity for Titles separate from employees
@@ -69,7 +70,6 @@ When a user signs in, they will create a token, and use that token to access the
 
 * API will be RESTful and return predictable data for a given internal state.
 * API routes will be logical and consistent, with correct spelling and consistent pluralization.
-
 
 ---
 
