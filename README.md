@@ -105,18 +105,18 @@ User stories can be found in this [link](https://trello.com/b/x6A2dKi8/vroom-401
 ### User Roles & Permissions
 
 #### Employees Table
-* Only for their own data
 
 | | Create | Read  | Update | Delete |
-| ------------- |:-------------:| -----:|:-------------:| -----:|
+| ------------- |:-------------:| :-----:|:-------------:| :-----:|
 | CEO  | Yes | Yes | Yes |  |
 | Office Manager    | Yes | Yes | Yes |  |
 | Employee  |  | Yes | Yes* |  |
+* *Only for their own data
 
 #### Equipment Table
 
 | | Create | Read  | Update | Delete |
-| ------------- |:-------------:| -----:|:-------------:| -----:|
+| ------------- |:-------------:| :-----:|:-------------:| :-----:|
 | CEO  | Yes | Yes | Yes | Yes |
 | Office Manager    |  | Yes | Yes |  |
 | Employee  |  | Yes |  |  |
@@ -124,7 +124,7 @@ User stories can be found in this [link](https://trello.com/b/x6A2dKi8/vroom-401
 #### EmployeeEquipment Table
 
 | | Create | Read  | Update | Delete |
-| ------------- |:-------------:| -----:|:-------------:| -----:|
+| ------------- |:-------------:| :-----:|:-------------:| :-----:|
 | CEO  | Yes | Yes | Yes |  |
 | Office Manager    | Yes | Yes | Yes |  |
 | Employee  |  | Yes* | Yes* |  |
@@ -132,6 +132,8 @@ User stories can be found in this [link](https://trello.com/b/x6A2dKi8/vroom-401
 ---
 
 ## Change Log
+
+1.2: *Added User Roles & Permissions to README* - 2 Aug 2020
 
 1.1: *Added an ERD and UMD images, software requirements and a link to user stories in a project management board* - 31 Jul 2020  
 
