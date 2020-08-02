@@ -102,6 +102,33 @@ Microsoft Visual Studio Community 2019
 
 User stories can be found in this [link](https://trello.com/b/x6A2dKi8/vroom-401-cf) to the project management board.
 
+### User Roles & Permissions
+
+#### Employees Table
+* Only for their own data
+
+| | Create | Read  | Update | Delete |
+| ------------- |:-------------:| -----:|:-------------:| -----:|
+| CEO  | Yes | Yes | Yes |  |
+| Office Manager    | Yes | Yes | Yes |  |
+| Employee  |  | Yes | Yes* |  |
+
+#### Equipment Table
+
+| | Create | Read  | Update | Delete |
+| ------------- |:-------------:| -----:|:-------------:| -----:|
+| CEO  | Yes | Yes | Yes | Yes |
+| Office Manager    |  | Yes | Yes |  |
+| Employee  |  | Yes |  |  |
+
+#### EmployeeEquipment Table
+
+| | Create | Read  | Update | Delete |
+| ------------- |:-------------:| -----:|:-------------:| -----:|
+| CEO  | Yes | Yes | Yes |  |
+| Office Manager    | Yes | Yes | Yes |  |
+| Employee  |  | Yes* | Yes* |  |
+
 ---
 
 ## Change Log
