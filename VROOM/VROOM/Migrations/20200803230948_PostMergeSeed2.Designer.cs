@@ -10,8 +10,8 @@ using VROOM.Data;
 namespace VROOM.Migrations
 {
     [DbContext(typeof(VROOMDbContext))]
-    [Migration("20200803222336_PostMergeSeed3")]
-    partial class PostMergeSeed3
+    [Migration("20200803230948_PostMergeSeed2")]
+    partial class PostMergeSeed2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -311,7 +311,7 @@ namespace VROOM.Migrations
                     b.Property<DateTime>("DateReturned")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EquipmentItemsId")
+                    b.Property<int?>("EquipmentItemId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -319,7 +319,7 @@ namespace VROOM.Migrations
 
                     b.HasKey("EmployeeId", "EquipmentId");
 
-                    b.HasIndex("EquipmentItemsId");
+                    b.HasIndex("EquipmentItemId");
 
                     b.ToTable("EmployeeEquipmentItem");
 
@@ -462,15 +462,15 @@ namespace VROOM.Migrations
 
             modelBuilder.Entity("VROOM.Models.EmployeeEquipmentItem", b =>
                 {
-                    b.HasOne("VROOM.Models.Employee", "Employees")
+                    b.HasOne("VROOM.Models.Employee", "Employee")
                         .WithMany("EmployeeEquipmentItems")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VROOM.Models.EquipmentItem", "EquipmentItems")
+                    b.HasOne("VROOM.Models.EquipmentItem", "EquipmentItem")
                         .WithMany("EmployeeEquipmentItems")
-                        .HasForeignKey("EquipmentItemsId");
+                        .HasForeignKey("EquipmentItemId");
                 });
 #pragma warning restore 612, 618
         }

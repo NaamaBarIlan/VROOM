@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VROOM.Migrations
 {
-    public partial class PostMergeSeed3 : Migration
+    public partial class PostMergeSeed2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -196,7 +196,7 @@ namespace VROOM.Migrations
                     Status = table.Column<int>(nullable: false),
                     DateBorrowed = table.Column<DateTime>(nullable: false),
                     DateReturned = table.Column<DateTime>(nullable: false),
-                    EquipmentItemsId = table.Column<int>(nullable: true)
+                    EquipmentItemId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -208,8 +208,8 @@ namespace VROOM.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EmployeeEquipmentItem_EquipmentItem_EquipmentItemsId",
-                        column: x => x.EquipmentItemsId,
+                        name: "FK_EmployeeEquipmentItem_EquipmentItem_EquipmentItemId",
+                        column: x => x.EquipmentItemId,
                         principalTable: "EquipmentItem",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -243,7 +243,7 @@ namespace VROOM.Migrations
 
             migrationBuilder.InsertData(
                 table: "EmployeeEquipmentItem",
-                columns: new[] { "EmployeeId", "EquipmentId", "DateBorrowed", "DateReturned", "EquipmentItemsId", "Status" },
+                columns: new[] { "EmployeeId", "EquipmentId", "DateBorrowed", "DateReturned", "EquipmentItemId", "Status" },
                 values: new object[] { 1, 1, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local), null, 1 });
 
             migrationBuilder.CreateIndex(
@@ -286,9 +286,9 @@ namespace VROOM.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeEquipmentItem_EquipmentItemsId",
+                name: "IX_EmployeeEquipmentItem_EquipmentItemId",
                 table: "EmployeeEquipmentItem",
-                column: "EquipmentItemsId");
+                column: "EquipmentItemId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

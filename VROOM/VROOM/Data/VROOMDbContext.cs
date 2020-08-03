@@ -22,7 +22,7 @@ namespace VROOM.Data
             builder.Entity<EmployeeEquipmentItem>().HasData(
                 new EmployeeEquipmentItem
                 {
-                    EquipmentId = 1,
+                    EquipmentItemId = 1,
                     EmployeeId = 1,
                     Status = (int)EmployeeEquipmentStatus.Borrowed,
                     DateBorrowed = DateTime.Today.AddDays(-2.0),
@@ -130,7 +130,7 @@ namespace VROOM.Data
                 }
                 );
 
-            builder.Entity<EmployeeEquipmentItem>().HasKey(x => new { x.EmployeeId, x.EquipmentId });
+            builder.Entity<EmployeeEquipmentItem>().HasKey(x => new { x.EmployeeId, x.EquipmentItemId });
         }
 
         // db sets
