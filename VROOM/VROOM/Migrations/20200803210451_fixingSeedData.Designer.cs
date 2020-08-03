@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VROOM.Data;
 
 namespace VROOM.Migrations
 {
     [DbContext(typeof(VROOMDbContext))]
-    partial class VROOMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200803210451_fixingSeedData")]
+    partial class fixingSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -315,18 +317,6 @@ namespace VROOM.Migrations
                             Id = 7,
                             Name = "Lenovo ThinkPad",
                             Value = 700m
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Apple MacBook Pro",
-                            Value = 1500m
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "HP Pavilion",
-                            Value = 900m
                         });
                 });
 

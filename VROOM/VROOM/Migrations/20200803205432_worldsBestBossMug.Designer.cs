@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VROOM.Data;
 
 namespace VROOM.Migrations
 {
     [DbContext(typeof(VROOMDbContext))]
-    partial class VROOMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200803205432_worldsBestBossMug")]
+    partial class worldsBestBossMug
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,54 +279,42 @@ namespace VROOM.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "World's Best Boss Mug",
-                            Value = 20m
-                        },
-                        new
-                        {
-                            Id = 2,
                             Name = "Copy Machine",
                             Value = 8000m
                         },
                         new
                         {
+                            Id = 2,
+                            Name = "World's Best Boss Mug",
+                            Value = 20m
+                        },
+                        new
+                        {
                             Id = 3,
-                            Name = "Stapler",
-                            Value = 15m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Megaphone",
-                            Value = 50m
-                        },
-                        new
-                        {
-                            Id = 5,
                             Name = "Paper Shredder",
                             Value = 100m
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 4,
                             Name = "Fax Machine",
                             Value = 200m
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 5,
                             Name = "Lenovo ThinkPad",
                             Value = 700m
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 6,
                             Name = "Apple MacBook Pro",
                             Value = 1500m
                         },
                         new
                         {
-                            Id = 9,
+                            Id = 7,
                             Name = "HP Pavilion",
                             Value = 900m
                         });
