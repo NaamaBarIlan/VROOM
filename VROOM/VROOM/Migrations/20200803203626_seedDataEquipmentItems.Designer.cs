@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VROOM.Data;
 
 namespace VROOM.Migrations
 {
     [DbContext(typeof(VROOMDbContext))]
-    partial class VROOMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200803203626_seedDataEquipmentItems")]
+    partial class seedDataEquipmentItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,31 +224,7 @@ namespace VROOM.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BranchAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BranchName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BranchPhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Dept")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -257,41 +235,7 @@ namespace VROOM.Migrations
                         new
                         {
                             Id = 1,
-                            BranchAddress = "1725 Slough Avenue, Scranton, PA",
-                            BranchName = "Scranton Branch",
-                            BranchPhone = "(570) 348-4100",
-                            Dept = "Management",
-                            Email = "mscott@vroom.com",
-                            FirstName = "Michael",
-                            LastName = "Scott",
-                            Phone = "(570)-348-4178",
-                            Title = "Regional Manager"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BranchAddress = "1725 Slough Avenue, Scranton, PA",
-                            BranchName = "Scranton Branch",
-                            BranchPhone = "(570) 348-4100",
-                            Dept = "Administration",
-                            Email = "pbeesly@vroom.com",
-                            FirstName = "Pamela",
-                            LastName = "Beesly",
-                            Phone = "(570) 348-4118",
-                            Title = "Office Manager"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BranchAddress = "1725 Slough Avenue, Scranton, PA",
-                            BranchName = "Scranton Branch",
-                            BranchPhone = "(570) 348-4100",
-                            Dept = "Sales",
-                            Email = "jhalpert@vroom.com",
-                            FirstName = "James",
-                            LastName = "Halpert",
-                            Phone = "(570) 348-4186",
-                            Title = "Sales Representative"
+                            FirstName = "Michael"
                         });
                 });
 
@@ -335,54 +279,36 @@ namespace VROOM.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "World's Best Boss Mug",
-                            Value = 20m
-                        },
-                        new
-                        {
-                            Id = 2,
                             Name = "Copy Machine",
                             Value = 8000m
                         },
                         new
                         {
-                            Id = 3,
-                            Name = "Stapler",
-                            Value = 15m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Megaphone",
-                            Value = 50m
-                        },
-                        new
-                        {
-                            Id = 5,
+                            Id = 2,
                             Name = "Paper Shredder",
                             Value = 100m
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 3,
                             Name = "Fax Machine",
                             Value = 200m
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 4,
                             Name = "Lenovo ThinkPad",
                             Value = 700m
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 5,
                             Name = "Apple MacBook Pro",
                             Value = 1500m
                         },
                         new
                         {
-                            Id = 9,
+                            Id = 6,
                             Name = "HP Pavilion",
                             Value = 900m
                         });
@@ -441,12 +367,6 @@ namespace VROOM.Migrations
 
             modelBuilder.Entity("VROOM.Models.EmployeeEquipmentItem", b =>
                 {
-                    b.HasOne("VROOM.Models.Employee", null)
-                        .WithMany("EmployeeEquipmentItems")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("VROOM.Models.EquipmentItem", null)
                         .WithMany("EmployeeEquipmentItems")
                         .HasForeignKey("EquipmentItemId");

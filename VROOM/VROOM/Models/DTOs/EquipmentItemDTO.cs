@@ -8,5 +8,6 @@ namespace VROOM.Models.DTOs
     public class EquipmentItemDTO
     {
         public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
