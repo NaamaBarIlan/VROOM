@@ -15,6 +15,6 @@ namespace VROOM.Models
         public decimal Value { get; set; }
 
         // Nav properties
-        public ICollection<EmployeeEquipmentItem> EmployeeEquipmentItems { get; set; }
+        public List<EmployeeEquipmentItem> EmployeeEquipmentItems { get; set; }
     }
 }
