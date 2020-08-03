@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using VROOM.Models.Interfaces;
 using VROOM.Data;
 using VROOM.Models.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace VROOM.Models.Services
 {
@@ -17,9 +18,19 @@ namespace VROOM.Models.Services
             _context = context;
         }
 
-        public Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecords()
+        public async Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecords()
         {
-            throw new NotImplementedException();
+            List<EmployeeEquipmentItemDTO> EEItemDTOs = await _context.EmployeeEquipmentItem
+                .Select(x => new EmployeeEquipmentItemDTO
+                {
+                    EquipmentId = x.EquipmentItemId,
+                    EmployeeId = x.EmployeeId,
+                    Status = "",
+                    DateBorrowed = x.DateBorrowed,
+                    DateReturned = x.DateReturned
+                })
+                .ToListAsync();
+            return null;
         }
 
         public Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecordsForEmployee(int employeeId)

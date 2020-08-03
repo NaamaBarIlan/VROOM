@@ -53,7 +53,7 @@ namespace VROOM.Models.Services
             EquipmentItem equipmentItem = await _context.EquipmentItem.FindAsync(Id);
 
             var employeeEquipmentItems = await _context.EmployeeEquipmentItem
-                                                        .Where(x => x.EquipmentId == Id)
+                                                        .Where(x => x.EquipmentItemId == Id)
                                                         .ToListAsync();
 
             if (equipmentItem == null)

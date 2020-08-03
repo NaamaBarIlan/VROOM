@@ -300,7 +300,7 @@ namespace VROOM.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EquipmentId")
+                    b.Property<int>("EquipmentItemId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateBorrowed")
@@ -309,15 +309,12 @@ namespace VROOM.Migrations
                     b.Property<DateTime>("DateReturned")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EquipmentItemsId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeeId", "EquipmentId");
+                    b.HasKey("EmployeeId", "EquipmentItemId");
 
-                    b.HasIndex("EquipmentItemsId");
+                    b.HasIndex("EquipmentItemId");
 
                     b.ToTable("EmployeeEquipmentItem");
 
@@ -325,7 +322,7 @@ namespace VROOM.Migrations
                         new
                         {
                             EmployeeId = 1,
-                            EquipmentId = 1,
+                            EquipmentItemId = 1,
                             DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             Status = 1
@@ -460,15 +457,17 @@ namespace VROOM.Migrations
 
             modelBuilder.Entity("VROOM.Models.EmployeeEquipmentItem", b =>
                 {
-                    b.HasOne("VROOM.Models.Employee", "Employees")
+                    b.HasOne("VROOM.Models.Employee", "Employee")
                         .WithMany("EmployeeEquipmentItems")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VROOM.Models.EquipmentItem", "EquipmentItems")
+                    b.HasOne("VROOM.Models.EquipmentItem", "EquipmentItem")
                         .WithMany("EmployeeEquipmentItems")
-                        .HasForeignKey("EquipmentItemsId");
+                        .HasForeignKey("EquipmentItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
