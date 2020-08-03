@@ -29,21 +29,11 @@ namespace VROOM.Data
             builder.Entity<EmployeeEquipmentItem>().HasData(
                 new EmployeeEquipmentItem
                 {
-
-                }
-            );
-
-            builder.Entity<Employee>().HasData(
-                new EmployeeEquipmentItem
-                {
-
-                }
-            );
-
-            builder.Entity<EquipmentItem>().HasData(
-                new EmployeeEquipmentItem
-                {
-
+                    EquipmentId = 1,
+                    EmployeeId = 1,
+                    Status = (int)EmployeeEquipmentStatus.Borrowed,
+                    DateBorrowed = DateTime.Today.AddDays(-2.0),
+                    DateReturned = DateTime.Today
                 }
             );
 

@@ -39,7 +39,7 @@ namespace VROOM.Models.Services
 
         public Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecordsWithStatus(int statusId)
         {
-
+            throw new NotImplementedException();
         }
 
         public Task<EmployeeEquipmentItemDTO> Create(EmployeeEquipmentItemDTO EEItemDTO)
