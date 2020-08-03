@@ -8,5 +8,7 @@ namespace VROOM.Models
     public class EquipmentItem
     {
         public int Id { get; set; }
+
+        //DELETE ME
     }
 }
