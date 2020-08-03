@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VROOM.Data;
 
 namespace VROOM.Migrations
 {
     [DbContext(typeof(VROOMDbContext))]
-    partial class VROOMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200803192945_InitialSetup")]
+    partial class InitialSetup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,38 +224,13 @@ namespace VROOM.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-
                     b.Property<int?>("EmployeeEquipmentItemEmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int?>("EmployeeEquipmentItemEquipmentId")
                         .HasColumnType("int");
-                        
-                    b.Property<string>("BranchAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BranchName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BranchPhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Dept")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -266,44 +243,7 @@ namespace VROOM.Migrations
                         new
                         {
                             Id = 1,
-
-                            FirstName = "Michael",
-                            BranchAddress = "1725 Slough Avenue, Scranton, PA",
-                            BranchName = "Scranton Branch",
-                            BranchPhone = "(570) 348-4100",
-                            Dept = "Management",
-                            Email = "mscott@vroom.com",
-                            FirstName = "Michael",
-                            LastName = "Scott",
-                            Phone = "(570)-348-4178",
-                            Title = "Regional Manager"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FirstName = "Pam"
-                            BranchAddress = "1725 Slough Avenue, Scranton, PA",
-                            BranchName = "Scranton Branch",
-                            BranchPhone = "(570) 348-4100",
-                            Dept = "Administration",
-                            Email = "pbeesly@vroom.com",
-                            FirstName = "Pamela",
-                            LastName = "Beesly",
-                            Phone = "(570) 348-4118",
-                            Title = "Office Manager"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BranchAddress = "1725 Slough Avenue, Scranton, PA",
-                            BranchName = "Scranton Branch",
-                            BranchPhone = "(570) 348-4100",
-                            Dept = "Sales",
-                            Email = "jhalpert@vroom.com",
-                            FirstName = "James",
-                            LastName = "Halpert",
-                            Phone = "(570) 348-4186",
-                            Title = "Sales Representative"
+                            FirstName = "Michael"
                         });
                 });
 
@@ -322,25 +262,11 @@ namespace VROOM.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
-
-                    b.Property<int?>("EquipmentItemId")
                         .HasColumnType("int");
 
                     b.HasKey("EmployeeId", "EquipmentId");
 
-                    b.HasIndex("EquipmentItemId");
-
                     b.ToTable("EmployeeEquipmentItem");
-
-                    b.HasData(
-                        new
-                        {
-                            EmployeeId = 1,
-                            EquipmentId = 2,
-                            DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
-                            Status = 1
-                        });
                 });
 
             modelBuilder.Entity("VROOM.Models.EquipmentItem", b =>
@@ -356,77 +282,11 @@ namespace VROOM.Migrations
                     b.Property<int?>("EmployeeEquipmentItemEquipmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Value")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeEquipmentItemEmployeeId", "EmployeeEquipmentItemEquipmentId");
 
                     b.ToTable("EquipmentItem");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "World's Best Boss Mug",
-                            Value = 20m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Copy Machine",
-                            Value = 8000m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Stapler",
-                            Value = 15m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Megaphone",
-                            Value = 50m
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Paper Shredder",
-                            Value = 100m
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Fax Machine",
-                            Value = 200m
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Lenovo ThinkPad",
-                            Value = 700m
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Apple MacBook Pro",
-                            Value = 1500m
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "HP Pavilion",
-                            Value = 900m
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -492,18 +352,6 @@ namespace VROOM.Migrations
                     b.HasOne("VROOM.Models.EmployeeEquipmentItem", null)
                         .WithMany("EquipmentItems")
                         .HasForeignKey("EmployeeEquipmentItemEmployeeId", "EmployeeEquipmentItemEquipmentId");
-
-            modelBuilder.Entity("VROOM.Models.EmployeeEquipmentItem", b =>
-                {
-                    b.HasOne("VROOM.Models.Employee", null)
-                        .WithMany("EmployeeEquipmentItems")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("VROOM.Models.EquipmentItem", null)
-                        .WithMany("EmployeeEquipmentItems")
-                        .HasForeignKey("EquipmentItemId");
                 });
 #pragma warning restore 612, 618
         }

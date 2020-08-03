@@ -17,9 +17,25 @@ namespace VROOM.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-            
-            builder.Entity<EmployeeEquipmentItem>().HasKey(x => new { x.EmployeeId, x.EquipmentId });
+            base.OnModelCreating(builder)
+
+            builder.Entity<Employee>().HasData(
+                new Employee 
+                { 
+                    Id = 1, FirstName = "Michael" 
+                }
+            );
+
+            builder.Entity<EmployeeEquipmentItem>().HasData(
+                new EmployeeEquipmentItem
+                {
+                    EquipmentId = 1,
+                    EmployeeId = 1,
+                    Status = (int)EmployeeEquipmentStatus.Borrowed,
+                    DateBorrowed = DateTime.Today.AddDays(-2.0),
+                    DateReturned = DateTime.Today
+                }
+            );
 
             // Seeding Employee Data:
             builder.Entity<Employee>().HasData(
@@ -120,6 +136,7 @@ namespace VROOM.Data
                     Value = 900
                 }
                 );
+
             builder.Entity<EmployeeEquipmentItem>().HasKey(x => new { x.EmployeeId, x.EquipmentId });
         }
 
