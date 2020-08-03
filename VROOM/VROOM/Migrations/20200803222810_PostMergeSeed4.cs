@@ -2,7 +2,7 @@
 
 namespace VROOM.Migrations
 {
-    public partial class InitialSetup2 : Migration
+    public partial class PostMergeSeed4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

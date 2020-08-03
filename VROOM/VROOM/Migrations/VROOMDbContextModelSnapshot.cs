@@ -222,13 +222,6 @@ namespace VROOM.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-
-                    b.Property<int?>("EmployeeEquipmentItemEmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EmployeeEquipmentItemEquipmentId")
-                        .HasColumnType("int");
-                        
                     b.Property<string>("BranchAddress")
                         .HasColumnType("nvarchar(max)");
 
@@ -258,16 +251,12 @@ namespace VROOM.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeEquipmentItemEmployeeId", "EmployeeEquipmentItemEquipmentId");
-
                     b.ToTable("Employee");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-
-                            FirstName = "Michael",
                             BranchAddress = "1725 Slough Avenue, Scranton, PA",
                             BranchName = "Scranton Branch",
                             BranchPhone = "(570) 348-4100",
@@ -281,7 +270,6 @@ namespace VROOM.Migrations
                         new
                         {
                             Id = 2,
-                            FirstName = "Pam"
                             BranchAddress = "1725 Slough Avenue, Scranton, PA",
                             BranchName = "Scranton Branch",
                             BranchPhone = "(570) 348-4100",
@@ -321,14 +309,15 @@ namespace VROOM.Migrations
                     b.Property<DateTime>("DateReturned")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("EquipmentItemsId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("EquipmentItemId")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("EmployeeId", "EquipmentId");
 
-                    b.HasIndex("EquipmentItemId");
+                    b.HasIndex("EquipmentItemsId");
 
                     b.ToTable("EmployeeEquipmentItem");
 
@@ -336,7 +325,7 @@ namespace VROOM.Migrations
                         new
                         {
                             EmployeeId = 1,
-                            EquipmentId = 2,
+                            EquipmentId = 1,
                             DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             Status = 1
@@ -350,15 +339,6 @@ namespace VROOM.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("EmployeeEquipmentItemEmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EmployeeEquipmentItemEquipmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -367,8 +347,6 @@ namespace VROOM.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmployeeEquipmentItemEmployeeId", "EmployeeEquipmentItemEquipmentId");
 
                     b.ToTable("EquipmentItem");
 
@@ -480,30 +458,17 @@ namespace VROOM.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("VROOM.Models.Employee", b =>
-                {
-                    b.HasOne("VROOM.Models.EmployeeEquipmentItem", null)
-                        .WithMany("Employees")
-                        .HasForeignKey("EmployeeEquipmentItemEmployeeId", "EmployeeEquipmentItemEquipmentId");
-                });
-
-            modelBuilder.Entity("VROOM.Models.EquipmentItem", b =>
-                {
-                    b.HasOne("VROOM.Models.EmployeeEquipmentItem", null)
-                        .WithMany("EquipmentItems")
-                        .HasForeignKey("EmployeeEquipmentItemEmployeeId", "EmployeeEquipmentItemEquipmentId");
-
             modelBuilder.Entity("VROOM.Models.EmployeeEquipmentItem", b =>
                 {
-                    b.HasOne("VROOM.Models.Employee", null)
+                    b.HasOne("VROOM.Models.Employee", "Employees")
                         .WithMany("EmployeeEquipmentItems")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VROOM.Models.EquipmentItem", null)
+                    b.HasOne("VROOM.Models.EquipmentItem", "EquipmentItems")
                         .WithMany("EmployeeEquipmentItems")
-                        .HasForeignKey("EquipmentItemId");
+                        .HasForeignKey("EquipmentItemsId");
                 });
 #pragma warning restore 612, 618
         }

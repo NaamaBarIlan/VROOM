@@ -17,14 +17,7 @@ namespace VROOM.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder)
-
-            builder.Entity<Employee>().HasData(
-                new Employee 
-                { 
-                    Id = 1, FirstName = "Michael" 
-                }
-            );
+            base.OnModelCreating(builder);
 
             builder.Entity<EmployeeEquipmentItem>().HasData(
                 new EmployeeEquipmentItem

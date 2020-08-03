@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VROOM.Migrations
 {
-    public partial class initialDbSeedSetup : Migration
+    public partial class PostMergeSeed3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,15 @@ namespace VROOM.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    Dept = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    BranchName = table.Column<string>(nullable: true),
+                    BranchAddress = table.Column<string>(nullable: true),
+                    BranchPhone = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,23 +68,13 @@ namespace VROOM.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmployeeEquipmentItem",
-                columns: table => new
-                {
-                    EquipmentId = table.Column<int>(nullable: false),
-                    EmployeeId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeeEquipmentItem", x => new { x.EmployeeId, x.EquipmentId });
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EquipmentItem",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    Value = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,10 +187,64 @@ namespace VROOM.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "EmployeeEquipmentItem",
+                columns: table => new
+                {
+                    EquipmentId = table.Column<int>(nullable: false),
+                    EmployeeId = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    DateBorrowed = table.Column<DateTime>(nullable: false),
+                    DateReturned = table.Column<DateTime>(nullable: false),
+                    EquipmentItemsId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeEquipmentItem", x => new { x.EmployeeId, x.EquipmentId });
+                    table.ForeignKey(
+                        name: "FK_EmployeeEquipmentItem_Employee_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeEquipmentItem_EquipmentItem_EquipmentItemsId",
+                        column: x => x.EquipmentItemsId,
+                        principalTable: "EquipmentItem",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "Employee",
-                columns: new[] { "Id", "FirstName" },
-                values: new object[] { 1, "Michael" });
+                columns: new[] { "Id", "BranchAddress", "BranchName", "BranchPhone", "Dept", "Email", "FirstName", "LastName", "Phone", "Title" },
+                values: new object[,]
+                {
+                    { 1, "1725 Slough Avenue, Scranton, PA", "Scranton Branch", "(570) 348-4100", "Management", "mscott@vroom.com", "Michael", "Scott", "(570)-348-4178", "Regional Manager" },
+                    { 2, "1725 Slough Avenue, Scranton, PA", "Scranton Branch", "(570) 348-4100", "Administration", "pbeesly@vroom.com", "Pamela", "Beesly", "(570) 348-4118", "Office Manager" },
+                    { 3, "1725 Slough Avenue, Scranton, PA", "Scranton Branch", "(570) 348-4100", "Sales", "jhalpert@vroom.com", "James", "Halpert", "(570) 348-4186", "Sales Representative" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EquipmentItem",
+                columns: new[] { "Id", "Name", "Value" },
+                values: new object[,]
+                {
+                    { 1, "World's Best Boss Mug", 20m },
+                    { 2, "Copy Machine", 8000m },
+                    { 3, "Stapler", 15m },
+                    { 4, "Megaphone", 50m },
+                    { 5, "Paper Shredder", 100m },
+                    { 6, "Fax Machine", 200m },
+                    { 7, "Lenovo ThinkPad", 700m },
+                    { 8, "Apple MacBook Pro", 1500m },
+                    { 9, "HP Pavilion", 900m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EmployeeEquipmentItem",
+                columns: new[] { "EmployeeId", "EquipmentId", "DateBorrowed", "DateReturned", "EquipmentItemsId", "Status" },
+                values: new object[] { 1, 1, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local), null, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -232,6 +284,11 @@ namespace VROOM.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeEquipmentItem_EquipmentItemsId",
+                table: "EmployeeEquipmentItem",
+                column: "EquipmentItemsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -252,19 +309,19 @@ namespace VROOM.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Employee");
-
-            migrationBuilder.DropTable(
                 name: "EmployeeEquipmentItem");
-
-            migrationBuilder.DropTable(
-                name: "EquipmentItem");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Employee");
+
+            migrationBuilder.DropTable(
+                name: "EquipmentItem");
         }
     }
 }
