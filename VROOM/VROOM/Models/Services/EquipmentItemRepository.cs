@@ -24,7 +24,8 @@ namespace VROOM.Models.Services
         {
             EquipmentItem entity = new EquipmentItem()
             {
-                Name = equipmentItem.Name
+                Name = equipmentItem.Name,
+                Value = equipmentItem.Value
             };
 
             _context.Entry(entity).State = EntityState.Added;
@@ -69,7 +70,8 @@ namespace VROOM.Models.Services
                 EquipmentItemDTO dto = new EquipmentItemDTO()
                 {
                     Id = equipmentItem.Id,
-                    Name = equipmentItem.Name
+                    Name = equipmentItem.Name,
+                    Value = equipmentItem.Value
                 };
 
                 return dto;

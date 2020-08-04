@@ -323,24 +323,24 @@ namespace VROOM.Migrations
                         {
                             EmployeeId = 1,
                             EquipmentItemId = 1,
-                            DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateBorrowed = new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateReturned = new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             StatusId = 1
                         },
                         new
                         {
                             EmployeeId = 1,
                             EquipmentItemId = 6,
-                            DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateBorrowed = new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateReturned = new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             StatusId = 1
                         },
                         new
                         {
                             EmployeeId = 2,
                             EquipmentItemId = 4,
-                            DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateBorrowed = new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateReturned = new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             StatusId = 1
                         });
                 });

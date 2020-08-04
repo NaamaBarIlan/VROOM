@@ -28,10 +28,10 @@ namespace VROOM.Controllers
         }
 
         // GET: api/EquipmentItems/5
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<EquipmentItemDTO>> GetEquipmentItem(int Id)
+        [HttpGet("{EquipmentItemId}")]
+        public async Task<ActionResult<EquipmentItemDTO>> GetEquipmentItem(int EquipmentItemId)
         {
-            EquipmentItemDTO equipmentItem = await _equipmentItem.GetEquipmentItem(Id);
+            EquipmentItemDTO equipmentItem = await _equipmentItem.GetEquipmentItem(EquipmentItemId);
 
             if (equipmentItem == null)
             {
@@ -42,10 +42,10 @@ namespace VROOM.Controllers
         }
 
         // PUT: api/EquipmentItems/5
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> PutEquipmentItem(int Id, EquipmentItem equipmentItem)
+        [HttpPut("{EquipmentItemId}")]
+        public async Task<IActionResult> PutEquipmentItem(int EquipmentItemId, EquipmentItem equipmentItem)
         {
-            if (Id != equipmentItem.Id)
+            if (EquipmentItemId != equipmentItem.Id)
             {
                 return BadRequest();
             }
@@ -65,10 +65,10 @@ namespace VROOM.Controllers
         }
 
         // DELETE: api/EquipmentItems/5
-        [HttpDelete("{Id}")]
-        public async Task<ActionResult<EquipmentItem>> DeleteEquipmentItem(int Id)
+        [HttpDelete("{EquipmentItemId}")]
+        public async Task<ActionResult<EquipmentItem>> DeleteEquipmentItem(int EquipmentItemId)
         {
-            await _equipmentItem.Delete(Id);
+            await _equipmentItem.Delete(EquipmentItemId);
             return NoContent();
         }
     }

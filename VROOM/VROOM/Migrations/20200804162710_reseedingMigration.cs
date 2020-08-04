@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VROOM.Migrations
 {
-    public partial class reMigrating : Migration
+    public partial class reseedingMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -191,9 +191,9 @@ namespace VROOM.Migrations
                 name: "EmployeeEquipmentItem",
                 columns: table => new
                 {
-                    EquipmentItemId = table.Column<int>(nullable: false),
                     EmployeeId = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
+                    EquipmentItemId = table.Column<int>(nullable: false),
+                    StatusId = table.Column<int>(nullable: false),
                     DateBorrowed = table.Column<DateTime>(nullable: false),
                     DateReturned = table.Column<DateTime>(nullable: false)
                 },
@@ -242,8 +242,18 @@ namespace VROOM.Migrations
 
             migrationBuilder.InsertData(
                 table: "EmployeeEquipmentItem",
-                columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "Status" },
-                values: new object[] { 1, 1, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local), 1 });
+                columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "StatusId" },
+                values: new object[] { 1, 1, new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local), 1 });
+
+            migrationBuilder.InsertData(
+                table: "EmployeeEquipmentItem",
+                columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "StatusId" },
+                values: new object[] { 2, 4, new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local), 1 });
+
+            migrationBuilder.InsertData(
+                table: "EmployeeEquipmentItem",
+                columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "StatusId" },
+                values: new object[] { 1, 6, new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local), 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
