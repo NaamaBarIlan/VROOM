@@ -335,7 +335,7 @@ namespace VROOM.Migrations
                         {
                             EmployeeId = 1,
                             EquipmentItemId = 1,
-                            DateBorrowed = new DateTime(2020, 7, 25, 12, 5, 27, 868, DateTimeKind.Local).AddTicks(3217),
+                            DateBorrowed = new DateTime(2020, 7, 25, 14, 1, 50, 150, DateTimeKind.Local).AddTicks(1804),
                             DateReturned = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StatusId = 1
                         },
@@ -343,7 +343,7 @@ namespace VROOM.Migrations
                         {
                             EmployeeId = 1,
                             EquipmentItemId = 6,
-                            DateBorrowed = new DateTime(2020, 8, 3, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9912),
+                            DateBorrowed = new DateTime(2020, 8, 3, 14, 1, 50, 152, DateTimeKind.Local).AddTicks(2451),
                             DateReturned = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StatusId = 1
                         },
@@ -351,7 +351,7 @@ namespace VROOM.Migrations
                         {
                             EmployeeId = 2,
                             EquipmentItemId = 4,
-                            DateBorrowed = new DateTime(2020, 8, 2, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9953),
+                            DateBorrowed = new DateTime(2020, 8, 2, 14, 1, 50, 152, DateTimeKind.Local).AddTicks(2491),
                             DateReturned = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StatusId = 1
                         },
@@ -359,8 +359,8 @@ namespace VROOM.Migrations
                         {
                             EmployeeId = 3,
                             EquipmentItemId = 4,
-                            DateBorrowed = new DateTime(2020, 7, 20, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9959),
-                            DateReturned = new DateTime(2020, 7, 26, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9961),
+                            DateBorrowed = new DateTime(2020, 7, 20, 14, 1, 50, 152, DateTimeKind.Local).AddTicks(2496),
+                            DateReturned = new DateTime(2020, 7, 26, 14, 1, 50, 152, DateTimeKind.Local).AddTicks(2499),
                             StatusId = 2
                         });
                 });

@@ -9,10 +9,34 @@ namespace VROOM.Models.Interfaces
 {
     public interface IEmployeeEquipmentItem
     {
+        /// <summary>
+        /// Gets all EmployeeEquipmentItem logs.
+        /// </summary>
+        /// <returns>
+        /// List<EmployeeEquipmentDTO>: a list of EmployeeEquipmentItemDTOs
+        /// </returns>
         Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecords();
 
+        /// <summary>
+        /// Gets all EmployeeEquipmentItem logs for a specific employee.
+        /// </summary>
+        /// <param name="employeeId">
+        /// int: the id of the employee
+        /// </param>
+        /// <returns>
+        /// List<EmployeeEquipmentDTO>: a list of EmployeeEquipmentItemDTOs
+        /// </returns>
         Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecordsForEmployee(int employeeId);
 
+        /// <summary>
+        /// Gets all EmployeeEquipmentItem logs for a specific piece of equipment.
+        /// </summary>
+        /// <param name="equipmentItemId">
+        /// 
+        /// </param>
+        /// <returns>
+        /// List<EmployeeEquipmentDTO>: a list of EmployeeEquipmentItemDTOs
+        /// </returns>
         Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecordsForEquipmentItem(int equipmentItemId);
 
         Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecordsFor(int employeeId, int equipmentItemId);

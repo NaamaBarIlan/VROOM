@@ -16,6 +16,18 @@ namespace VROOM.Models.Services
         private IEmployee _employee;
         private IEquipmentItem _equipmentItem;
 
+        /// <summary>
+        /// Instantiates a new EmployeeEquipmentItemRepository object.
+        /// </summary>
+        /// <param name="context">
+        /// VROOMDbContext: an object that inherits from DbContext
+        /// </param>
+        /// <param name="employee">
+        /// IEmployee: an object that implements IEmployee
+        /// </param>
+        /// <param name="equipmentItem">
+        /// IEquipmentItem: an object that implements IEquipmentItem
+        /// </param>
         public EmployeeEquipmentItemRepository(VROOMDbContext context, IEmployee employee, IEquipmentItem equipmentItem)
         {
             _context = context;
@@ -196,14 +208,29 @@ namespace VROOM.Models.Services
             {
                 return false;
             }
-
             var mostRecentActivityItem = await _context.EmployeeEquipmentItem
                 .Where(x => x.EquipmentItemId == equipmentItemId)
                 .OrderByDescending(x => x.DateBorrowed)
-                .FirstAsync();
-            return mostRecentActivityItem.StatusId == (int)EmployeeEquipmentStatus.Available;
+                .FirstOrDefaultAsync();
+            if (mostRecentActivityItem == null)
+            {
+                return true;
+            }
+            else
+            {
+                return mostRecentActivityItem.StatusId == (int)EmployeeEquipmentStatus.Available;
+            }
         }
 
+        /// <summary>
+        /// Private helper method. Adds Employee and EquipmentItem DTOs to EmployeeEquipmentItem DTOs as nested objects.
+        /// </summary>
+        /// <param name="EEItemDTOs">
+        /// List<EmployeeEquiptmentItemDTO>: a List of EmployeeEquipmentItemDTOs
+        /// </param>
+        /// <returns>
+        /// List<EmployeeEquiptmentItemDTO>: a List of EmployeeEquipmentItemDTOs with Employee and EquipmentItem DTOs embedded
+        /// </returns>
         private async Task<List<EmployeeEquipmentItemDTO>> NestDTOsIn(List<EmployeeEquipmentItemDTO> EEItemDTOs)
         {
             foreach (EmployeeEquipmentItemDTO EEIDTO in EEItemDTOs)
@@ -214,6 +241,15 @@ namespace VROOM.Models.Services
             return EEItemDTOs;
         }
 
+        /// <summary>
+        /// Private helper method. Converts from EmployeeEquipmentItemDTO to EmployeeEquipmentItem (entity) object.
+        /// </summary>
+        /// <param name="EEItemDTO">
+        /// EmployeeEquipmentItemDTO: a DTO object
+        /// </param>
+        /// <returns>
+        /// EmployeeEquipmentItem: an entity object
+        /// </returns>
         private EmployeeEquipmentItem ConvertFromDTOtoEntity(EmployeeEquipmentItemDTO EEItemDTO)
         {
             return new EmployeeEquipmentItem()
@@ -226,6 +262,15 @@ namespace VROOM.Models.Services
             };
         }
 
+        /// <summary>
+        /// Private helper method. Converts from EmployeeEquipmentItem (entity) to EmployeeEquipmentItemDTO object.
+        /// </summary>
+        /// <param name="EEItem">
+        /// EmployeeEquipmentItem: an entity object
+        /// </param>
+        /// <returns>
+        /// EmployeeEquipmentItemDTO: a DTO object
+        /// </returns>
         private EmployeeEquipmentItemDTO ConvertFromEntityToDTO(EmployeeEquipmentItem EEItem)
         {
             return new EmployeeEquipmentItemDTO()
@@ -238,6 +283,15 @@ namespace VROOM.Models.Services
             };
         }
 
+        /// <summary>
+        /// Private helper method. Returns a string form of the EmployeeEquipmentStatus enum.
+        /// </summary>
+        /// <param name="statusId">
+        /// int: the int form of the EmployeeEquipmentStatus enum
+        /// </param>
+        /// <returns>
+        /// string: the string form of the EmployeeEquipmentStatus enum
+        /// </returns>
         private static string EmployeeEquipmentStatusStringFrom(int statusId)
         {
             return ((EmployeeEquipmentStatus)statusId).ToString();
