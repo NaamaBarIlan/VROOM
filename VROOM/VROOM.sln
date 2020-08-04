@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VROOM", "VROOM\VROOM.csproj", "{939915DB-B6CA-4BD4-9F60-665F8F77F983}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VROOM", "VROOM\VROOM.csproj", "{939915DB-B6CA-4BD4-9F60-665F8F77F983}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{9D832555-5DB8-4152-9D44-2BB8EAFD0050}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{939915DB-B6CA-4BD4-9F60-665F8F77F983}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{939915DB-B6CA-4BD4-9F60-665F8F77F983}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{939915DB-B6CA-4BD4-9F60-665F8F77F983}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D832555-5DB8-4152-9D44-2BB8EAFD0050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D832555-5DB8-4152-9D44-2BB8EAFD0050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D832555-5DB8-4152-9D44-2BB8EAFD0050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D832555-5DB8-4152-9D44-2BB8EAFD0050}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

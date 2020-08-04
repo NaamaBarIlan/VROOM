@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VROOM.Migrations
 {
-    public partial class PostMergeSeed2 : Migration
+    public partial class reMigrating : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -191,16 +191,15 @@ namespace VROOM.Migrations
                 name: "EmployeeEquipmentItem",
                 columns: table => new
                 {
-                    EquipmentId = table.Column<int>(nullable: false),
+                    EquipmentItemId = table.Column<int>(nullable: false),
                     EmployeeId = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     DateBorrowed = table.Column<DateTime>(nullable: false),
-                    DateReturned = table.Column<DateTime>(nullable: false),
-                    EquipmentItemId = table.Column<int>(nullable: true)
+                    DateReturned = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeEquipmentItem", x => new { x.EmployeeId, x.EquipmentId });
+                    table.PrimaryKey("PK_EmployeeEquipmentItem", x => new { x.EmployeeId, x.EquipmentItemId });
                     table.ForeignKey(
                         name: "FK_EmployeeEquipmentItem_Employee_EmployeeId",
                         column: x => x.EmployeeId,
@@ -212,7 +211,7 @@ namespace VROOM.Migrations
                         column: x => x.EquipmentItemId,
                         principalTable: "EquipmentItem",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -243,8 +242,8 @@ namespace VROOM.Migrations
 
             migrationBuilder.InsertData(
                 table: "EmployeeEquipmentItem",
-                columns: new[] { "EmployeeId", "EquipmentId", "DateBorrowed", "DateReturned", "EquipmentItemId", "Status" },
-                values: new object[] { 1, 1, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local), null, 1 });
+                columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "Status" },
+                values: new object[] { 1, 1, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local), 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
