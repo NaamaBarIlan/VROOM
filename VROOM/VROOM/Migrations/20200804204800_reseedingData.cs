@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VROOM.Migrations
 {
-    public partial class addAllTables : Migration
+    public partial class reseedingData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

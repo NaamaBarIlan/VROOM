@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace VROOM.Controllers
 
         // GET: api/EquipmentItems
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<EquipmentItemDTO>>> GetEquipmentItems()
         {
             return await _equipmentItem.GetEquipmentItems();
@@ -29,6 +31,7 @@ namespace VROOM.Controllers
 
         // GET: api/EquipmentItems/5
         [HttpGet("{EquipmentItemId}")]
+        [AllowAnonymous]
         public async Task<ActionResult<EquipmentItemDTO>> GetEquipmentItem(int EquipmentItemId)
         {
             EquipmentItemDTO equipmentItem = await _equipmentItem.GetEquipmentItem(EquipmentItemId);
@@ -43,6 +46,7 @@ namespace VROOM.Controllers
 
         // PUT: api/EquipmentItems/5
         [HttpPut("{EquipmentItemId}")]
+        [Authorize(Policy = "SilverLevel")]
         public async Task<IActionResult> PutEquipmentItem(int EquipmentItemId, EquipmentItem equipmentItem)
         {
             if (EquipmentItemId != equipmentItem.Id)
@@ -57,6 +61,7 @@ namespace VROOM.Controllers
 
         // POST: api/EquipmentItems
         [HttpPost]
+        [Authorize(Policy = "GoldLevel")]
         public async Task<ActionResult<EquipmentItemDTO>> PostEquipmentItem(EquipmentItemDTO equipmentItem)
         {
             await _equipmentItem.Create(equipmentItem);
@@ -66,6 +71,7 @@ namespace VROOM.Controllers
 
         // DELETE: api/EquipmentItems/5
         [HttpDelete("{EquipmentItemId}")]
+        [Authorize(Policy = "GoldLevel")]
         public async Task<ActionResult<EquipmentItem>> DeleteEquipmentItem(int EquipmentItemId)
         {
             await _equipmentItem.Delete(EquipmentItemId);

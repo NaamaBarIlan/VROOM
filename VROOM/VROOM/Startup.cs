@@ -18,6 +18,8 @@ using VROOM.Models.Services;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using System.Net.Mail;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace VROOM
 {
@@ -87,6 +89,7 @@ namespace VROOM
             services.AddTransient<IEmployee, EmployeeRepository>();
             services.AddTransient<IEquipmentItem, EquipmentItemRepository>();
             services.AddTransient<IEmployeeEquipmentItem, EmployeeEquipmentItemRepository>();
+            services.AddTransient<IEmailSender, EmailSenderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -10,8 +10,8 @@ using VROOM.Data;
 namespace VROOM.Migrations
 {
     [DbContext(typeof(VROOMDbContext))]
-    [Migration("20200804192637_addAllTables")]
-    partial class addAllTables
+    [Migration("20200804204800_reseedingData")]
+    partial class reseedingData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
