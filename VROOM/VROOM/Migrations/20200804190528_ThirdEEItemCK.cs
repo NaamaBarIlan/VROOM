@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VROOM.Migrations
 {
-    public partial class addAllTables : Migration
+    public partial class ThirdEEItemCK : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -194,13 +194,13 @@ namespace VROOM.Migrations
                 {
                     EmployeeId = table.Column<int>(nullable: false),
                     EquipmentItemId = table.Column<int>(nullable: false),
-                    StatusId = table.Column<int>(nullable: false),
                     DateBorrowed = table.Column<DateTime>(nullable: false),
+                    StatusId = table.Column<int>(nullable: false),
                     DateReturned = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeEquipmentItem", x => new { x.EmployeeId, x.EquipmentItemId });
+                    table.PrimaryKey("PK_EmployeeEquipmentItem", x => new { x.EmployeeId, x.EquipmentItemId, x.DateBorrowed });
                     table.ForeignKey(
                         name: "FK_EmployeeEquipmentItem_Employee_EmployeeId",
                         column: x => x.EmployeeId,
@@ -244,17 +244,13 @@ namespace VROOM.Migrations
             migrationBuilder.InsertData(
                 table: "EmployeeEquipmentItem",
                 columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "StatusId" },
-                values: new object[] { 1, 1, new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local), 1 });
-
-            migrationBuilder.InsertData(
-                table: "EmployeeEquipmentItem",
-                columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "StatusId" },
-                values: new object[] { 2, 4, new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local), 1 });
-
-            migrationBuilder.InsertData(
-                table: "EmployeeEquipmentItem",
-                columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "StatusId" },
-                values: new object[] { 1, 6, new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local), 1 });
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2020, 7, 25, 12, 5, 27, 868, DateTimeKind.Local).AddTicks(3217), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, 4, new DateTime(2020, 8, 2, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9953), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 3, 4, new DateTime(2020, 7, 20, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9959), new DateTime(2020, 7, 26, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9961), 2 },
+                    { 1, 6, new DateTime(2020, 8, 3, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9912), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

@@ -24,25 +24,30 @@ namespace VROOM.Data
                 {
                     EmployeeId = 1,
                     EquipmentItemId = 1,
-                    StatusId = (int)EmployeeEquipmentStatus.Borrowed,
-                    DateBorrowed = DateTime.Today.AddDays(-2.0),
-                    DateReturned = DateTime.Today
+                    DateBorrowed = DateTime.Now.AddDays(-10.0),
+                    StatusId = (int)EmployeeEquipmentStatus.Borrowed
                 },
                 new EmployeeEquipmentItem
                 {
                     EmployeeId = 1,
                     EquipmentItemId = 6,
-                    StatusId = (int)EmployeeEquipmentStatus.Borrowed,
-                    DateBorrowed = DateTime.Today.AddDays(-2.0),
-                    DateReturned = DateTime.Today
+                    DateBorrowed = DateTime.Now.AddDays(-1.0),
+                    StatusId = (int)EmployeeEquipmentStatus.Borrowed
                 },
                 new EmployeeEquipmentItem
                 {
                     EmployeeId = 2,
                     EquipmentItemId = 4,
-                    StatusId = (int)EmployeeEquipmentStatus.Borrowed,
-                    DateBorrowed = DateTime.Today.AddDays(-2.0),
-                    DateReturned = DateTime.Today
+                    DateBorrowed = DateTime.Now.AddDays(-2.0),
+                    StatusId = (int)EmployeeEquipmentStatus.Borrowed
+                },
+                new EmployeeEquipmentItem
+                {
+                    EmployeeId = 3,
+                    EquipmentItemId = 4,
+                    DateBorrowed = DateTime.Now.AddDays(-15.0),
+                    StatusId = (int)EmployeeEquipmentStatus.Returned,
+                    DateReturned = DateTime.Now.AddDays(-9.0)
                 }
             );
 
@@ -149,7 +154,7 @@ namespace VROOM.Data
                 }
                 );
 
-            builder.Entity<EmployeeEquipmentItem>().HasKey(x => new { x.EmployeeId, x.EquipmentItemId });
+            builder.Entity<EmployeeEquipmentItem>().HasKey(x => new { x.EmployeeId, x.EquipmentItemId, x.DateBorrowed });
         }
 
         // db sets
