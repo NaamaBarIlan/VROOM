@@ -21,6 +21,12 @@ namespace VROOM.Models.Interfaces
 
         Task<EmployeeEquipmentItemDTO> SetEquipmentItemAsBorrowedBy(int employeeId, EmployeeEquipmentItemDTO EEItemDTO);
 
-        Task<EmployeeEquipmentItemDTO> UpdateEmployeeEquipmentItemRecord(int employeeId, EmployeeEquipmentItemDTO EEItemDTO);
+        Task<EmployeeEquipmentItemDTO> UpdateEmployeeEquipmentItemRecord(EmployeeEquipmentItemDTO EEItemDTO);
+
+        Task<EmployeeEquipmentItemDTO> ReturnItem(EmployeeEquipmentItemDTO EEItemDTO);
+
+        Task<bool> CheckIfItemIsAvailable(int equipmentItemId);
+
+        Task<List<EmployeeEquipmentItemDTO>> ListOfUpdatableItemsFor(int employeeId, int equipmentItemId);
     }
 }

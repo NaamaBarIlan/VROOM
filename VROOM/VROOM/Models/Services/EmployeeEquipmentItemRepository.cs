@@ -33,7 +33,7 @@ namespace VROOM.Models.Services
                     EmployeeId = x.EmployeeId,
                     EquipmentItemId = x.EquipmentItemId,
                     StatusId = x.StatusId,
-                    Status = ((EmployeeEquipmentStatus)x.StatusId).ToString(),
+                    Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
                     DateBorrowed = x.DateBorrowed,
                     DateReturned = x.DateReturned
                 })
@@ -56,7 +56,7 @@ namespace VROOM.Models.Services
                     EmployeeId = x.EmployeeId,
                     EquipmentItemId = x.EquipmentItemId,
                     StatusId = x.StatusId,
-                    Status = ((EmployeeEquipmentStatus)x.StatusId).ToString(),
+                    Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
                     DateBorrowed = x.DateBorrowed,
                     DateReturned = x.DateReturned
                 })
@@ -79,7 +79,7 @@ namespace VROOM.Models.Services
                     EmployeeId = x.EmployeeId,
                     EquipmentItemId = x.EquipmentItemId,
                     StatusId = x.StatusId,
-                    Status = ((EmployeeEquipmentStatus)x.StatusId).ToString(),
+                    Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
                     DateBorrowed = x.DateBorrowed,
                     DateReturned = x.DateReturned
                 })
@@ -103,7 +103,7 @@ namespace VROOM.Models.Services
                     EmployeeId = x.EmployeeId,
                     EquipmentItemId = x.EquipmentItemId,
                     StatusId = x.StatusId,
-                    Status = ((EmployeeEquipmentStatus)x.StatusId).ToString(),
+                    Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
                     DateBorrowed = x.DateBorrowed,
                     DateReturned = x.DateReturned
                 })
@@ -126,7 +126,7 @@ namespace VROOM.Models.Services
                     EmployeeId = x.EmployeeId,
                     EquipmentItemId = x.EquipmentItemId,
                     StatusId = x.StatusId,
-                    Status = ((EmployeeEquipmentStatus)x.StatusId).ToString(),
+                    Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
                     DateBorrowed = x.DateBorrowed,
                     DateReturned = x.DateReturned
                 })
@@ -149,9 +149,59 @@ namespace VROOM.Models.Services
             return EEItemDTO;
         }
 
-        public Task<EmployeeEquipmentItemDTO> UpdateEmployeeEquipmentItemRecord(int employeeId, EmployeeEquipmentItemDTO EEItemDTO)
+        public async Task<EmployeeEquipmentItemDTO> UpdateEmployeeEquipmentItemRecord(EmployeeEquipmentItemDTO EEItemDTO)
         {
-            throw new NotImplementedException();
+            EmployeeEquipmentItem EEItem = await _context.FindAsync<EmployeeEquipmentItem>(EEItemDTO.EmployeeId, EEItemDTO.EquipmentItemId, EEItemDTO.DateBorrowed);
+            if (EEItemDTO.StatusId == (int)EmployeeEquipmentStatus.Returned)
+            {
+                EEItemDTO.DateReturned = DateTime.Now;
+                EEItem.DateReturned = EEItemDTO.DateReturned;
+            }
+            EEItemDTO.Status = EmployeeEquipmentStatusStringFrom(EEItemDTO.StatusId);
+            EEItem.StatusId = EEItemDTO.StatusId;
+            _context.Entry(EEItem).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return EEItemDTO;
+        }
+
+        public async Task<EmployeeEquipmentItemDTO> ReturnItem(EmployeeEquipmentItemDTO EEItemDTO)
+        {
+            EEItemDTO.StatusId = (int)EmployeeEquipmentStatus.Returned;
+            return await UpdateEmployeeEquipmentItemRecord(EEItemDTO);
+        }
+
+        public async Task<List<EmployeeEquipmentItemDTO>> ListOfUpdatableItemsFor(int employeeId, int equipmentItemId)
+        {
+            var allItemsForEmployeeNotYetReturned = await _context.EmployeeEquipmentItem
+                .Where(x => x.EmployeeId == employeeId)
+                .Where(x => x.EquipmentItemId == equipmentItemId)
+                .Where(x => x.StatusId != (int)EmployeeEquipmentStatus.Returned)
+                .Select(x => new EmployeeEquipmentItemDTO
+                {
+                    EmployeeId = x.EmployeeId,
+                    EquipmentItemId = x.EquipmentItemId,
+                    StatusId = x.StatusId,
+                    Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
+                    DateBorrowed = x.DateBorrowed,
+                    DateReturned = x.DateReturned
+                })
+                .ToListAsync();
+            return allItemsForEmployeeNotYetReturned;
+        }
+
+        public async Task<bool> CheckIfItemIsAvailable(int equipmentItemId)
+        {
+            var EItemDTO = await _equipmentItem.GetEquipmentItem(equipmentItemId);
+            if (EItemDTO == null)
+            {
+                return false;
+            }
+
+            var mostRecentActivityItem = await _context.EmployeeEquipmentItem
+                .Where(x => x.EquipmentItemId == equipmentItemId)
+                .OrderByDescending(x => x.DateBorrowed)
+                .FirstAsync();
+            return mostRecentActivityItem.StatusId == (int)EmployeeEquipmentStatus.Available;
         }
 
         private async Task<List<EmployeeEquipmentItemDTO>> NestDTOsIn(List<EmployeeEquipmentItemDTO> EEItemDTOs)
@@ -174,6 +224,23 @@ namespace VROOM.Models.Services
                 DateBorrowed = EEItemDTO.DateBorrowed,
                 DateReturned = EEItemDTO.DateReturned,
             };
+        }
+
+        private EmployeeEquipmentItemDTO ConvertFromEntityToDTO(EmployeeEquipmentItem EEItem)
+        {
+            return new EmployeeEquipmentItemDTO()
+            {
+                EmployeeId = EEItem.EmployeeId,
+                EquipmentItemId = EEItem.EquipmentItemId,
+                StatusId = EEItem.StatusId,
+                DateBorrowed = EEItem.DateBorrowed,
+                DateReturned = EEItem.DateReturned,
+            };
+        }
+
+        private static string EmployeeEquipmentStatusStringFrom(int statusId)
+        {
+            return ((EmployeeEquipmentStatus)statusId).ToString();
         }
     }
 }

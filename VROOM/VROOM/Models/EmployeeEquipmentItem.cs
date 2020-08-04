@@ -18,13 +18,16 @@ namespace VROOM.Models
 
     public class EmployeeEquipmentItem
     {
+        //CK
         public int EmployeeId { get; set; }
 
+        //CK
         public int EquipmentItemId { get; set; }
 
-        public int StatusId { get; set; }
-
+        //CK
         public DateTime DateBorrowed { get; set; }
+
+        public int StatusId { get; set; }
 
         public DateTime DateReturned { get; set; }
 

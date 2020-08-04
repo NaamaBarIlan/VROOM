@@ -16,7 +16,6 @@ namespace VROOM.Controllers
     [ApiController]
     public class EmployeeEquipmentItemController : ControllerBase
     {
-        private readonly VROOMDbContext _context;
         private readonly IEmployeeEquipmentItem _employeeEquipmentItem;
 
         public EmployeeEquipmentItemController(IEmployeeEquipmentItem employeeEquipmentItem)
@@ -95,45 +94,68 @@ namespace VROOM.Controllers
             {
                 return BadRequest("EmployeeIDs must match.");
             }
-            EEItemDTO = await _employeeEquipmentItem.SetEquipmentItemAsBorrowedBy(employeeId, EEItemDTO);
-            return EEItemDTO;
+            if (!await _employeeEquipmentItem.CheckIfItemIsAvailable(EEItemDTO.EquipmentItemId))
+            {
+                return BadRequest("Item is not available to be borrowed.");
+            }
+            else
+            {
+                EEItemDTO = await _employeeEquipmentItem.SetEquipmentItemAsBorrowedBy(employeeId, EEItemDTO);
+                return EEItemDTO;
+            }
         }
 
         // PUT: api/EmployeeEquipmentItem/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployeeEquipmentItem(int id, EmployeeEquipmentItem employeeEquipmentItem)
+        [HttpPut("{equipmentItemId}")]
+        public async Task<ActionResult<EmployeeEquipmentItemDTO>> UpdateEmployeeEquipmentItem(int equipmentItemId, EmployeeEquipmentItemDTO EEItemDTO)
         {
-            if (id != employeeEquipmentItem.EmployeeId)
+            if (equipmentItemId != EEItemDTO.EquipmentItemId)
             {
-                return BadRequest();
+                return BadRequest("EquipmentItemIDs must match.");
             }
-
-            _context.Entry(employeeEquipmentItem).State = EntityState.Modified;
-
-            try
+            var returnAbleItemForEmployeeDTOs = await _employeeEquipmentItem.ListOfUpdatableItemsFor(EEItemDTO.EmployeeId, equipmentItemId);
+            //for a given EmployeeID-EquipmentItemID combination, there should only ever be 0 or 1 returnable items
+            if (returnAbleItemForEmployeeDTOs.Count < 1)
             {
-                await _context.SaveChangesAsync();
+                return BadRequest("No updatable items found for that EquipmentItemID and EmployeeID combination.");
             }
-            catch (DbUpdateConcurrencyException)
+            else if (returnAbleItemForEmployeeDTOs.Count > 1)
             {
-                if (!EmployeeEquipmentItemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest("Database state invalid. More than one returnable item found for EquipmentItemID and EmployeeID combination.");
             }
-
-            return NoContent();
+            else
+            {
+                var EEItemDTOToBeUpdated = returnAbleItemForEmployeeDTOs.First();
+                EEItemDTOToBeUpdated.StatusId = EEItemDTO.StatusId;
+                var updatedEEItemDTO = await _employeeEquipmentItem.UpdateEmployeeEquipmentItemRecord(EEItemDTOToBeUpdated);
+                return updatedEEItemDTO;
+            }
         }
 
-        private bool EmployeeEquipmentItemExists(int id)
+        // PUT: api/EmployeeEquipmentItem/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("/Employee/{employeeId}/ReturnItem/{equipmentItemId}/")]
+        public async Task<ActionResult<EmployeeEquipmentItemDTO>> ReturnEquipmentItem(int employeeId, int equipmentItemId)
         {
-            return _context.EmployeeEquipmentItem.Any(e => e.EmployeeId == id);
+            var returnAbleItemForEmployeeDTOs = await _employeeEquipmentItem.ListOfUpdatableItemsFor(employeeId, equipmentItemId);
+            //for a given EmployeeID-EquipmentItemID combination, there should only ever be 0 or 1 returnable items
+            if (returnAbleItemForEmployeeDTOs.Count < 1)
+            {
+                return BadRequest("Entered data does not match any returnable items.");
+            }
+            else if (returnAbleItemForEmployeeDTOs.Count > 1)
+            {
+                return BadRequest("Database state invalid. More than one returnable item found for EquipmentItemID and EmployeeID combination.");
+            }
+            else
+            {
+                var EEItemDTOToBeReturned = returnAbleItemForEmployeeDTOs.First();
+                var updatedEEItemDTO = await _employeeEquipmentItem.ReturnItem(EEItemDTOToBeReturned);
+                return updatedEEItemDTO;
+            }
         }
     }
 }
