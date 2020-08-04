@@ -10,8 +10,8 @@ using VROOM.Data;
 namespace VROOM.Migrations
 {
     [DbContext(typeof(VROOMDbContext))]
-    [Migration("20200803231515_PostMergeSeed4")]
-    partial class PostMergeSeed4
+    [Migration("20200804002355_reMigrating")]
+    partial class reMigrating
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
