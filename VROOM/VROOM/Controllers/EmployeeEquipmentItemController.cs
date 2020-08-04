@@ -14,7 +14,6 @@ using VROOM.Models.DTOs;
 namespace VROOM.Controllers
 {
     [Route("api/[controller]")]
-    [AllowAnonymous]
     [ApiController]
     public class EmployeeEquipmentItemController : ControllerBase
     {
@@ -27,6 +26,7 @@ namespace VROOM.Controllers
 
         // GET: api/EmployeeEquipmentItem
         [HttpGet]
+        [Authorize(Policy = "BronzeLevel")]
         public async Task<ActionResult<IEnumerable<EmployeeEquipmentItemDTO>>> GetEmployeeEquipmentItems()
         {
             var EEItems = await _employeeEquipmentItem.GetAllEmployeeEquipmentRecords();
@@ -39,6 +39,7 @@ namespace VROOM.Controllers
 
         // GET: api/EmployeeEquipmentItem/Employee/{employeeId}
         [HttpGet("employee/{employeeId}")]
+        [Authorize(Policy = "BronzeLevel")]
         public async Task<ActionResult<IEnumerable<EmployeeEquipmentItemDTO>>> GetEmployeeEquipmentItemForEmployee(int employeeId)
         {
             var EEItemsForEmployee = await _employeeEquipmentItem.GetAllEmployeeEquipmentRecordsForEmployee(employeeId);
@@ -51,6 +52,7 @@ namespace VROOM.Controllers
 
         // GET: api/EmployeeEquipmentItem/EquipmentItem/{equipmentId}
         [HttpGet("equipmentitem/{equipmentItemId}")]
+        [Authorize(Policy = "BronzeLevel")]
         public async Task<ActionResult<IEnumerable<EmployeeEquipmentItemDTO>>> GetAllEmployeeEquipmentRecordsForEquipmentItem(int equipmentItemId)
         {
             var EEItemsForEquipmentItem = await _employeeEquipmentItem.GetAllEmployeeEquipmentRecordsForEquipmentItem(equipmentItemId);
@@ -63,6 +65,7 @@ namespace VROOM.Controllers
 
         // GET: api/EmployeeEquipmentItem/Employee/{employeeId}/EquipmentItem/{equipmentId}
         [HttpGet("employee/{employeeId}/equipmentitem/{equipmentItemId}")]
+        [Authorize(Policy = "BronzeLevel")]
         public async Task<ActionResult<IEnumerable<EmployeeEquipmentItemDTO>>> GetAllEmployeeEquipmentRecordsFor(int employeeId, int equipmentItemId)
         {
             var EEItemsForEmployeeAndEItem = await _employeeEquipmentItem.GetAllEmployeeEquipmentRecordsFor(employeeId, equipmentItemId);
@@ -75,6 +78,7 @@ namespace VROOM.Controllers
 
         // GET: api/EmployeeEquipmentItem/Status/{statusId}
         [HttpGet("status/{statusId}")]
+        [Authorize(Policy = "BronzeLevel")]
         public async Task<ActionResult<IEnumerable<EmployeeEquipmentItemDTO>>> GetAllEmployeeEquipmentRecordsWithStatus(int statusId)
         {
             EmployeeEquipmentStatus status = (EmployeeEquipmentStatus)statusId;
@@ -90,6 +94,7 @@ namespace VROOM.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost("{employeeId}")]
+        [Authorize(Policy = "SilverLevel")]
         public async Task<ActionResult<EmployeeEquipmentItemDTO>> SetEquipmentItemAsBorrowedBy(int employeeId, EmployeeEquipmentItemDTO EEItemDTO)
         {
             if (employeeId != EEItemDTO.EmployeeId)
@@ -111,6 +116,7 @@ namespace VROOM.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{equipmentItemId}")]
+        [Authorize(Policy = "BronzeLevel")]
         public async Task<ActionResult<EmployeeEquipmentItemDTO>> UpdateEmployeeEquipmentItem(int equipmentItemId, EmployeeEquipmentItemDTO EEItemDTO)
         {
             if (equipmentItemId != EEItemDTO.EquipmentItemId)
@@ -140,6 +146,7 @@ namespace VROOM.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("/Employee/{employeeId}/ReturnItem/{equipmentItemId}/")]
+        [Authorize(Policy = "BronzeLevel")]
         public async Task<ActionResult<EmployeeEquipmentItemDTO>> ReturnEquipmentItem(int employeeId, int equipmentItemId)
         {
             var returnAbleItemForEmployeeDTOs = await _employeeEquipmentItem.ListOfUpdatableItemsFor(employeeId, equipmentItemId);
