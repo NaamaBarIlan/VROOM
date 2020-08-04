@@ -30,6 +30,8 @@ namespace VROOM.Models.Services
             _context.Entry(entity).State = EntityState.Added;
             await _context.SaveChangesAsync();
 
+            equipmentItem.Id = entity.Id;
+
             return equipmentItem;
         }
 
