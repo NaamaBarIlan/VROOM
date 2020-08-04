@@ -32,8 +32,15 @@ namespace VROOM.Models.Services
         {
             Employee employee = await _context.Employee.FindAsync(id);
 
-            _context.Entry(employee).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
+            if(employee == null)
+            {
+                return;
+            }
+            else
+            {
+                _context.Entry(employee).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<List<EmployeeDTO>> GetEmployees()
@@ -54,20 +61,35 @@ namespace VROOM.Models.Services
         {
             Employee employee = await _context.Employee.FindAsync(id);
 
-            EmployeeDTO employeeDTO = ConvertEmployeeIntoDTO(employee);
+            if(employee == null)
+            {
+                return null;
+            }
+            else
+            {
+                EmployeeDTO employeeDTO = ConvertEmployeeIntoDTO(employee);
 
-            return employeeDTO;
+                return employeeDTO;
+            }
         }
 
         public async Task<EmployeeDTO> UpdateEmployee(int id, EmployeeDTO employeeDTO)
         {
             Employee employee = ConvertDTOIntoEmployee(employeeDTO);
 
-            _context.Entry(employee).State = EntityState.Modified;
+            if(employee == null)
+            {
+                return null;
+            }
+            else
+            {
+                _context.Entry(employee).State = EntityState.Modified;
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-            return employeeDTO;
+                return employeeDTO;
+            }
+            
         }
 
         private EmployeeDTO ConvertEmployeeIntoDTO(Employee employee)
