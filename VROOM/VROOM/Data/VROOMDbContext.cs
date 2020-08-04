@@ -22,8 +22,24 @@ namespace VROOM.Data
             builder.Entity<EmployeeEquipmentItem>().HasData(
                 new EmployeeEquipmentItem
                 {
-                    EquipmentItemId = 1,
                     EmployeeId = 1,
+                    EquipmentItemId = 1,
+                    Status = (int)EmployeeEquipmentStatus.Borrowed,
+                    DateBorrowed = DateTime.Today.AddDays(-2.0),
+                    DateReturned = DateTime.Today
+                },
+                new EmployeeEquipmentItem
+                {
+                    EmployeeId = 1,
+                    EquipmentItemId = 6,
+                    Status = (int)EmployeeEquipmentStatus.Borrowed,
+                    DateBorrowed = DateTime.Today.AddDays(-2.0),
+                    DateReturned = DateTime.Today
+                },
+                new EmployeeEquipmentItem
+                {
+                    EmployeeId = 2,
+                    EquipmentItemId = 4,
                     Status = (int)EmployeeEquipmentStatus.Borrowed,
                     DateBorrowed = DateTime.Today.AddDays(-2.0),
                     DateReturned = DateTime.Today

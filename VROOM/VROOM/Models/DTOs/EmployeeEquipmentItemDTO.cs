@@ -7,9 +7,9 @@ namespace VROOM.Models.DTOs
 {
     public class EmployeeEquipmentItemDTO
     {
-        public int EquipmentId { get; set; }
-
         public int EmployeeId { get; set; }
+
+        public int EquipmentItemId { get; set; }
 
         public string Status { get; set; }
 
@@ -17,6 +17,8 @@ namespace VROOM.Models.DTOs
 
         public DateTime DateReturned { get; set; }
 
-        public EquipmentItem EquipmentItem { get; set; }
+        public EmployeeDTO Employee { get; set; }
+
+        public EquipmentItemDTO EquipmentItem { get; set; }
     }
 }

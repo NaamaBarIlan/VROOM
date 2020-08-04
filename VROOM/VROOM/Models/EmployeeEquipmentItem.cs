@@ -18,9 +18,9 @@ namespace VROOM.Models
 
     public class EmployeeEquipmentItem
     {
-        public int EquipmentItemId { get; set; }
-
         public int EmployeeId { get; set; }
+
+        public int EquipmentItemId { get; set; }
 
         public int Status { get; set; }
 
@@ -28,7 +28,7 @@ namespace VROOM.Models
 
         public DateTime DateReturned { get; set; }
 
-        //Nav props
+        //Navigation properties
         public Employee Employee { get; set; }
 
         public EquipmentItem EquipmentItem { get; set; }

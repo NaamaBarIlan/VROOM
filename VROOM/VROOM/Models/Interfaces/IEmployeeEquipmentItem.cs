@@ -7,7 +7,7 @@ using VROOM.Models.DTOs;
 
 namespace VROOM.Models.Interfaces
 {
-    interface IEmployeeEquipmentItem
+    public interface IEmployeeEquipmentItem
     {
         Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecords();
 
