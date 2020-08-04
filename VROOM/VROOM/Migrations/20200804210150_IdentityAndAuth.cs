@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VROOM.Migrations
 {
-    public partial class ThirdEEItemCK : Migration
+    public partial class IdentityAndAuth : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,9 @@ namespace VROOM.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -246,10 +248,10 @@ namespace VROOM.Migrations
                 columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2020, 7, 25, 12, 5, 27, 868, DateTimeKind.Local).AddTicks(3217), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 2, 4, new DateTime(2020, 8, 2, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9953), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 3, 4, new DateTime(2020, 7, 20, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9959), new DateTime(2020, 7, 26, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9961), 2 },
-                    { 1, 6, new DateTime(2020, 8, 3, 12, 5, 27, 870, DateTimeKind.Local).AddTicks(9912), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 }
+                    { 1, 1, new DateTime(2020, 7, 25, 14, 1, 50, 150, DateTimeKind.Local).AddTicks(1804), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, 4, new DateTime(2020, 8, 2, 14, 1, 50, 152, DateTimeKind.Local).AddTicks(2491), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 3, 4, new DateTime(2020, 7, 20, 14, 1, 50, 152, DateTimeKind.Local).AddTicks(2496), new DateTime(2020, 7, 26, 14, 1, 50, 152, DateTimeKind.Local).AddTicks(2499), 2 },
+                    { 1, 6, new DateTime(2020, 8, 3, 14, 1, 50, 152, DateTimeKind.Local).AddTicks(2451), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 }
                 });
 
             migrationBuilder.CreateIndex(
