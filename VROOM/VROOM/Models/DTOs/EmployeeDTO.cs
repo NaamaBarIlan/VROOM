@@ -14,6 +14,8 @@ namespace VROOM.Models.DTOs
         public string Phone { get; set; }
         public string Dept { get; set; }
         public string Title { get; set; }
+        public int StatusId { get; set; }
+        public string Status { get; set; }
         public string BranchName { get; set; }
         public string BranchAddress { get; set; }
         public string BranchPhone { get; set; }

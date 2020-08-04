@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VROOM.Migrations
 {
-    public partial class reMigrating : Migration
+    public partial class addAllTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,6 +58,7 @@ namespace VROOM.Migrations
                     Phone = table.Column<string>(nullable: true),
                     Dept = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
+                    StatusId = table.Column<int>(nullable: false),
                     BranchName = table.Column<string>(nullable: true),
                     BranchAddress = table.Column<string>(nullable: true),
                     BranchPhone = table.Column<string>(nullable: true)
@@ -191,9 +192,9 @@ namespace VROOM.Migrations
                 name: "EmployeeEquipmentItem",
                 columns: table => new
                 {
-                    EquipmentItemId = table.Column<int>(nullable: false),
                     EmployeeId = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
+                    EquipmentItemId = table.Column<int>(nullable: false),
+                    StatusId = table.Column<int>(nullable: false),
                     DateBorrowed = table.Column<DateTime>(nullable: false),
                     DateReturned = table.Column<DateTime>(nullable: false)
                 },
@@ -216,12 +217,12 @@ namespace VROOM.Migrations
 
             migrationBuilder.InsertData(
                 table: "Employee",
-                columns: new[] { "Id", "BranchAddress", "BranchName", "BranchPhone", "Dept", "Email", "FirstName", "LastName", "Phone", "Title" },
+                columns: new[] { "Id", "BranchAddress", "BranchName", "BranchPhone", "Dept", "Email", "FirstName", "LastName", "Phone", "StatusId", "Title" },
                 values: new object[,]
                 {
-                    { 1, "1725 Slough Avenue, Scranton, PA", "Scranton Branch", "(570) 348-4100", "Management", "mscott@vroom.com", "Michael", "Scott", "(570)-348-4178", "Regional Manager" },
-                    { 2, "1725 Slough Avenue, Scranton, PA", "Scranton Branch", "(570) 348-4100", "Administration", "pbeesly@vroom.com", "Pamela", "Beesly", "(570) 348-4118", "Office Manager" },
-                    { 3, "1725 Slough Avenue, Scranton, PA", "Scranton Branch", "(570) 348-4100", "Sales", "jhalpert@vroom.com", "James", "Halpert", "(570) 348-4186", "Sales Representative" }
+                    { 1, "1725 Slough Avenue, Scranton, PA", "Scranton Branch", "(570) 348-4100", "Management", "mscott@vroom.com", "Michael", "Scott", "(570)-348-4178", 0, "Regional Manager" },
+                    { 2, "1725 Slough Avenue, Scranton, PA", "Scranton Branch", "(570) 348-4100", "Administration", "pbeesly@vroom.com", "Pamela", "Beesly", "(570) 348-4118", 1, "Office Manager" },
+                    { 3, "1725 Slough Avenue, Scranton, PA", "Scranton Branch", "(570) 348-4100", "Sales", "jhalpert@vroom.com", "James", "Halpert", "(570) 348-4186", 2, "Sales Representative" }
                 });
 
             migrationBuilder.InsertData(
@@ -242,8 +243,18 @@ namespace VROOM.Migrations
 
             migrationBuilder.InsertData(
                 table: "EmployeeEquipmentItem",
-                columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "Status" },
-                values: new object[] { 1, 1, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local), 1 });
+                columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "StatusId" },
+                values: new object[] { 1, 1, new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local), 1 });
+
+            migrationBuilder.InsertData(
+                table: "EmployeeEquipmentItem",
+                columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "StatusId" },
+                values: new object[] { 2, 4, new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local), 1 });
+
+            migrationBuilder.InsertData(
+                table: "EmployeeEquipmentItem",
+                columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "StatusId" },
+                values: new object[] { 1, 6, new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local), 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
