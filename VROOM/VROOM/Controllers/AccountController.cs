@@ -17,7 +17,6 @@ using VROOM.Models.DTOs;
 
 namespace VROOM.Controllers
 {
-    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -37,7 +36,7 @@ namespace VROOM.Controllers
 
         // api/account/register
         [HttpPost, Route("register")]
-        //[Authorize (Policy = "SilverLevel")]
+        [Authorize (Policy = "SilverLevel")]
         public async Task<IActionResult> Register(RegisterDTO register)
         {
             ApplicationUser user = new ApplicationUser()
@@ -53,7 +52,30 @@ namespace VROOM.Controllers
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, register.Role);
+                if(user.Email == _config["CEOEmail"])
+                {
+                    register.Role = ApplicationRoles.CEO;
+                    await _userManager.AddToRoleAsync(user, ApplicationRoles.CEO);
+                }
+                else 
+                {
+                    if(User.IsInRole("Office Manager"))
+                    {
+                        if(register.Role == ApplicationRoles.Employee)
+                        {
+                            await _userManager.AddToRoleAsync(user, register.Role);
+                        }
+                        else
+                        {
+                            return BadRequest();
+                        }
+                    }
+                    else if(User.IsInRole("CEO"))
+                    {
+                        await _userManager.AddToRoleAsync(user, register.Role);
+                    }
+
+                }
 
                 //sign the user in if it was successful.
                 await _signInManager.SignInAsync(user, false);
@@ -67,7 +89,7 @@ namespace VROOM.Controllers
 
         // api/account/login
         [HttpPost, Route("Login")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginDTO login)
         {
             var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, false);
@@ -100,12 +122,19 @@ namespace VROOM.Controllers
 
         // api/account/assign/role
         [HttpPost, Route("assign/role")]
-        //[AllowAnonymous]
+        [Authorize(Policy = "SilverLevel")]
         public async Task AssignRoleToUser(AssignRoleDTO assignment)
         {
             var user = await _userManager.FindByEmailAsync(assignment.Email);
 
-            await _userManager.AddToRoleAsync(user, assignment.Role);
+            string assignedRole = GetRole(assignment);
+
+            //if ((User.IsInRole("Office Manager") && assignment.Role != "Employee"))
+            //{
+            //    return BadRequest("Invalid Registration");
+            //}
+
+            await _userManager.AddToRoleAsync(user, assignedRole);
         }
 
         private JwtSecurityToken CreateToken(ApplicationUser user, List<string> role)
@@ -144,6 +173,27 @@ namespace VROOM.Controllers
                 );
 
             return token;
+        }
+
+        private string GetRole(AssignRoleDTO assignRoleDTO)
+        {
+            string role = "";
+            switch (assignRoleDTO.Role.ToLower())
+            {
+                case "ceo":
+                    role = ApplicationRoles.CEO;
+                    break;
+                case "office manager":
+                    role = ApplicationRoles.OfficeManager;
+                    break;
+                case "employee":
+                    role = ApplicationRoles.Employee;
+                    break;
+                default:
+                    break;
+            }
+
+            return role;
         }
     }
 }

@@ -17,6 +17,7 @@ using VROOM.Models.Interfaces;
 using VROOM.Models.Services;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace VROOM
 {
@@ -33,9 +34,15 @@ namespace VROOM
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson(options =>
-            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            services.AddControllers(options =>
+            {
+                //Make all routes by default autorized to require login:
+                options.Filters.Add(new AuthorizeFilter());
+
+            })
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
             services.AddDbContext<VROOMDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
