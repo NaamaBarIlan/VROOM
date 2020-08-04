@@ -57,6 +57,7 @@ namespace VROOM.Data
                     Phone = "(570)-348-4178",
                     Dept = "Management",
                     Title = "Regional Manager",
+                    StatusId = 0,
                     BranchName = "Scranton Branch",
                     BranchAddress = "1725 Slough Avenue, Scranton, PA",
                     BranchPhone = "(570) 348-4100"
@@ -70,6 +71,7 @@ namespace VROOM.Data
                     Phone = "(570) 348-4118",
                     Dept = "Administration",
                     Title = "Office Manager",
+                    StatusId = 1,
                     BranchName = "Scranton Branch",
                     BranchAddress = "1725 Slough Avenue, Scranton, PA",
                     BranchPhone = "(570) 348-4100"
@@ -83,6 +85,7 @@ namespace VROOM.Data
                     Phone = "(570) 348-4186",
                     Dept = "Sales",
                     Title = "Sales Representative",
+                    StatusId = 2,
                     BranchName = "Scranton Branch",
                     BranchAddress = "1725 Slough Avenue, Scranton, PA",
                     BranchPhone = "(570) 348-4100"

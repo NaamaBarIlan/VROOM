@@ -15,6 +15,7 @@ namespace VROOM.Models
         public string Phone { get; set; }
         public string Dept { get; set; }
         public string Title { get; set; }
+        public int StatusId { get; set; }
         public string BranchName { get; set; }
         public string BranchAddress { get; set; }
         public string BranchPhone { get; set; }
@@ -23,5 +24,15 @@ namespace VROOM.Models
 
         public List<EmployeeEquipmentItem> EmployeeEquipmentItems { get; set; }
 
+    }
+
+    public enum EmployeeStatus
+    {
+        Current = 0,
+        Former,
+        OnLeave,
+        LaidOff,
+        Fired,
+        Retired,
     }
 }

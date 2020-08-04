@@ -49,6 +49,11 @@ namespace VROOM.Models.Services
         {
             var employees = await _context.Employee.ToListAsync();
 
+            if(employees.Count < 1)
+            {
+                return null;
+            };
+
             List<EmployeeDTO> employeeDTOs = new List<EmployeeDTO>();
             foreach (var item in employees)
             {
@@ -105,6 +110,8 @@ namespace VROOM.Models.Services
                 Phone = employee.Phone,
                 Dept = employee.Dept,
                 Title = employee.Title,
+                StatusId = employee.StatusId,
+                Status = ((EmployeeStatus)employee.StatusId).ToString(),
                 BranchName = employee.BranchName,
                 BranchAddress = employee.BranchAddress,
                 BranchPhone = employee.BranchPhone
@@ -124,6 +131,7 @@ namespace VROOM.Models.Services
                 Phone = employeeDTO.Phone,
                 Dept = employeeDTO.Dept,
                 Title = employeeDTO.Title,
+                StatusId = employeeDTO.StatusId,
                 BranchName = employeeDTO.BranchName,
                 BranchAddress = employeeDTO.BranchAddress,
                 BranchPhone = employeeDTO.BranchPhone

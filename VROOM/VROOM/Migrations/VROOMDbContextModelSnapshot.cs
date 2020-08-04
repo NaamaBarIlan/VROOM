@@ -246,6 +246,9 @@ namespace VROOM.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -265,6 +268,7 @@ namespace VROOM.Migrations
                             FirstName = "Michael",
                             LastName = "Scott",
                             Phone = "(570)-348-4178",
+                            StatusId = 0,
                             Title = "Regional Manager"
                         },
                         new
@@ -278,6 +282,7 @@ namespace VROOM.Migrations
                             FirstName = "Pamela",
                             LastName = "Beesly",
                             Phone = "(570) 348-4118",
+                            StatusId = 1,
                             Title = "Office Manager"
                         },
                         new
@@ -291,6 +296,7 @@ namespace VROOM.Migrations
                             FirstName = "James",
                             LastName = "Halpert",
                             Phone = "(570) 348-4186",
+                            StatusId = 2,
                             Title = "Sales Representative"
                         });
                 });
@@ -323,24 +329,24 @@ namespace VROOM.Migrations
                         {
                             EmployeeId = 1,
                             EquipmentItemId = 1,
-                            DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateBorrowed = new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateReturned = new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             StatusId = 1
                         },
                         new
                         {
                             EmployeeId = 1,
                             EquipmentItemId = 6,
-                            DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateBorrowed = new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateReturned = new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             StatusId = 1
                         },
                         new
                         {
                             EmployeeId = 2,
                             EquipmentItemId = 4,
-                            DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateBorrowed = new DateTime(2020, 8, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateReturned = new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             StatusId = 1
                         });
                 });
