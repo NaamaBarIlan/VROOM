@@ -54,13 +54,13 @@ namespace VROOM.Controllers
             }
 
             // TODO: need to make sure that employees can only update their own data and that CEOs and Managers can update everyone's
-            //if (User.IsInRole("Employee"))
-            //{
-            //    if (employeeDTO.Id == User.)
-            //    {
+            if (User.IsInRole("Employee"))
+            {
+                if (employeeDTO.Id == User.)
+                {
 
-            //    }
-            //}
+                }
+            }
 
             EmployeeDTO updatedEmployeeDTO = await _employee.UpdateEmployee(id, employeeDTO);
 
