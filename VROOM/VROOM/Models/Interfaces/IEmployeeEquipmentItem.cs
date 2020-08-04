@@ -7,7 +7,7 @@ using VROOM.Models.DTOs;
 
 namespace VROOM.Models.Interfaces
 {
-    interface IEmployeeEquipmentItem
+    public interface IEmployeeEquipmentItem
     {
         Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecords();
 
@@ -17,10 +17,10 @@ namespace VROOM.Models.Interfaces
 
         Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecordsFor(int employeeId, int equipmentItemId);
 
-        Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecordsWithStatus(int statusId);
+        Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecordsWith(EmployeeEquipmentStatus status);
 
-        Task<EmployeeEquipmentItemDTO> Create(EmployeeEquipmentItemDTO EEItemDTO);
+        Task<EmployeeEquipmentItemDTO> SetEquipmentItemAsBorrowedBy(int employeeId, EmployeeEquipmentItemDTO EEItemDTO);
 
-        Task<EmployeeEquipmentItemDTO> Update(EmployeeEquipmentItemDTO EEItemDTO);
+        Task<EmployeeEquipmentItemDTO> UpdateEmployeeEquipmentItemRecord(int employeeId, EmployeeEquipmentItemDTO EEItemDTO);
     }
 }

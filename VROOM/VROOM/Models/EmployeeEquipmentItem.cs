@@ -18,17 +18,17 @@ namespace VROOM.Models
 
     public class EmployeeEquipmentItem
     {
-        public int EquipmentItemId { get; set; }
-
         public int EmployeeId { get; set; }
 
-        public int Status { get; set; }
+        public int EquipmentItemId { get; set; }
+
+        public int StatusId { get; set; }
 
         public DateTime DateBorrowed { get; set; }
 
         public DateTime DateReturned { get; set; }
 
-        //Nav props
+        //Navigation properties
         public Employee Employee { get; set; }
 
         public EquipmentItem EquipmentItem { get; set; }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VROOM.Data;
 
 namespace VROOM.Migrations
 {
     [DbContext(typeof(VROOMDbContext))]
-    partial class VROOMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200804000539_PostMergeSeed5")]
+    partial class PostMergeSeed5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -309,7 +311,7 @@ namespace VROOM.Migrations
                     b.Property<DateTime>("DateReturned")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StatusId")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("EmployeeId", "EquipmentItemId");
@@ -325,7 +327,7 @@ namespace VROOM.Migrations
                             EquipmentItemId = 1,
                             DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
-                            StatusId = 1
+                            Status = 1
                         },
                         new
                         {
@@ -333,7 +335,7 @@ namespace VROOM.Migrations
                             EquipmentItemId = 6,
                             DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
-                            StatusId = 1
+                            Status = 1
                         },
                         new
                         {
@@ -341,7 +343,7 @@ namespace VROOM.Migrations
                             EquipmentItemId = 4,
                             DateBorrowed = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             DateReturned = new DateTime(2020, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
-                            StatusId = 1
+                            Status = 1
                         });
                 });
 
