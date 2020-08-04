@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -27,11 +28,14 @@ namespace VROOM.Controllers
 
         private IConfiguration _config;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
+        private IEmailSender _emailSenderService;
+
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, IEmailSender emailSenderService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _config = configuration;
+            _emailSenderService = emailSenderService;
         }
 
         // api/account/register
@@ -79,6 +83,11 @@ namespace VROOM.Controllers
 
                 //sign the user in if it was successful.
                 await _signInManager.SignInAsync(user, false);
+
+                string subject = "Welcome to VROOM!";
+                string htmlMessage = $"<h1>CONGRATULATIONS {user.FirstName}</h1>";
+
+                await _emailSenderService.SendEmailAsync(user.Email, subject, htmlMessage);
 
                 return Ok();
             }
