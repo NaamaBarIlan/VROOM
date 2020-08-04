@@ -25,6 +25,8 @@ namespace VROOM.Models.Services
             _context.Entry(employee).State = EntityState.Added;
             await _context.SaveChangesAsync();
 
+            employeeDTO.Id = employee.Id;
+
             return employeeDTO;
         }
 
