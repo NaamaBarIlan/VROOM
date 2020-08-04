@@ -17,7 +17,7 @@ using VROOM.Models.DTOs;
 
 namespace VROOM.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -37,7 +37,7 @@ namespace VROOM.Controllers
 
         // api/account/register
         [HttpPost, Route("register")]
-        [Authorize (Policy = "SilverLevel")]
+        //[Authorize (Policy = "SilverLevel")]
         public async Task<IActionResult> Register(RegisterDTO register)
         {
             ApplicationUser user = new ApplicationUser()
@@ -67,7 +67,7 @@ namespace VROOM.Controllers
 
         // api/account/login
         [HttpPost, Route("Login")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task<IActionResult> Login(LoginDTO login)
         {
             var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, false);
@@ -100,7 +100,7 @@ namespace VROOM.Controllers
 
         // api/account/assign/role
         [HttpPost, Route("assign/role")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task AssignRoleToUser(AssignRoleDTO assignment)
         {
             var user = await _userManager.FindByEmailAsync(assignment.Email);

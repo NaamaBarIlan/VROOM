@@ -10,7 +10,7 @@ using VROOM.Data;
 namespace VROOM.Migrations
 {
     [DbContext(typeof(VROOMDbContext))]
-    [Migration("20200804165026_addAllTables")]
+    [Migration("20200804192637_addAllTables")]
     partial class addAllTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,6 +170,12 @@ namespace VROOM.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
