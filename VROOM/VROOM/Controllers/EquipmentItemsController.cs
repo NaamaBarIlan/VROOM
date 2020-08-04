@@ -12,6 +12,7 @@ namespace VROOM.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    // AuthorizeFilter added in Startup.cs
     public class EquipmentItemsController : ControllerBase
     {
         private readonly IEquipmentItem _equipmentItem;
