@@ -72,9 +72,31 @@ namespace VROOM.Controllers
             return EEItemsForEmployeeAndEItem;
         }
 
-        public async Task<ActionResult<IEnumerable<EmployeeEquipmentItemDTO>>> GetAllEmployeeEquipmentRecordsWithStatus(string status)
+        // GET: api/EmployeeEquipmentItem/Status/{statusId}
+        [HttpGet("status/{statusId}")]
+        public async Task<ActionResult<IEnumerable<EmployeeEquipmentItemDTO>>> GetAllEmployeeEquipmentRecordsWithStatus(int statusId)
         {
-            return null;
+            EmployeeEquipmentStatus status = (EmployeeEquipmentStatus)statusId;
+            var EEItemsWithStatus = await _employeeEquipmentItem.GetAllEmployeeEquipmentRecordsWith(status);
+            if (EEItemsWithStatus == null)
+            {
+                return NotFound();
+            }
+            return EEItemsWithStatus;
+        }
+
+        // POST: api/EmployeeEquipmentItem
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost("{employeeId}")]
+        public async Task<ActionResult<EmployeeEquipmentItemDTO>> SetEquipmentItemAsBorrowedBy(int employeeId, EmployeeEquipmentItemDTO EEItemDTO)
+        {
+            if (employeeId != EEItemDTO.EmployeeId)
+            {
+                return BadRequest("EmployeeIDs must match.");
+            }
+            EEItemDTO = await _employeeEquipmentItem.SetEquipmentItemAsBorrowedBy(employeeId, EEItemDTO);
+            return EEItemDTO;
         }
 
         // PUT: api/EmployeeEquipmentItem/5
@@ -109,46 +131,9 @@ namespace VROOM.Controllers
             return NoContent();
         }
 
-        // POST: api/EmployeeEquipmentItem
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<EmployeeEquipmentItem>> PostEmployeeEquipmentItem(EmployeeEquipmentItem employeeEquipmentItem)
-        {
-            _context.EmployeeEquipmentItem.Add(employeeEquipmentItem);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (EmployeeEquipmentItemExists(employeeEquipmentItem.EmployeeId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetEmployeeEquipmentItem", new { id = employeeEquipmentItem.EmployeeId }, employeeEquipmentItem);
-        }
-
         private bool EmployeeEquipmentItemExists(int id)
         {
             return _context.EmployeeEquipmentItem.Any(e => e.EmployeeId == id);
         }
-
-        //private EmployeeEquipmentStatus StatusStringToEnum(string status)
-        //{
-        //    switch (status.ToPascale())
-        //    {
-        //        case EmployeeEquipmentStatus.Available.Nam
-        //            return EmployeeEquipmentStatus.Available;
-        //        default:
-        //            break;
-        //    }
-        //}
     }
 }

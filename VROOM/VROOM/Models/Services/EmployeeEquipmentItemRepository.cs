@@ -32,19 +32,15 @@ namespace VROOM.Models.Services
                 {
                     EmployeeId = x.EmployeeId,
                     EquipmentItemId = x.EquipmentItemId,
-                    Status = ((EmployeeEquipmentStatus)x.Status).ToString(),
+                    StatusId = x.StatusId,
+                    Status = ((EmployeeEquipmentStatus)x.StatusId).ToString(),
                     DateBorrowed = x.DateBorrowed,
                     DateReturned = x.DateReturned
                 })
                 .ToListAsync();
             if (EEItemDTOs != null)
             {
-                NestDTOsIn(EEItemDTOs);
-                //foreach (EmployeeEquipmentItemDTO EEIDTO in EEItemDTOs)
-                //{
-                //    EEIDTO.Employee = await _employee.GetSingleEmployee(EEIDTO.EmployeeId);
-                //    EEIDTO.EquipmentItem = await _equipmentItem.GetEquipmentItem(EEIDTO.EquipmentItemId);
-                //}
+                EEItemDTOs = await NestDTOsIn(EEItemDTOs);
             }
             return EEItemDTOs;
         }
@@ -59,19 +55,15 @@ namespace VROOM.Models.Services
                 {
                     EmployeeId = x.EmployeeId,
                     EquipmentItemId = x.EquipmentItemId,
-                    Status = ((EmployeeEquipmentStatus)x.Status).ToString(),
+                    StatusId = x.StatusId,
+                    Status = ((EmployeeEquipmentStatus)x.StatusId).ToString(),
                     DateBorrowed = x.DateBorrowed,
                     DateReturned = x.DateReturned
                 })
                 .ToListAsync();
             if (oneEmployeeEEItemsDTOs != null)
             {
-                NestDTOsIn(oneEmployeeEEItemsDTOs);
-                //foreach (EmployeeEquipmentItemDTO EEIDTO in oneEmployeeEEItemsDTOs)
-                //{
-                //    EEIDTO.Employee = await _employee.GetSingleEmployee(EEIDTO.EmployeeId);
-                //    EEIDTO.EquipmentItem = await _equipmentItem.GetEquipmentItem(EEIDTO.EquipmentItemId);
-                //}
+                oneEmployeeEEItemsDTOs = await NestDTOsIn(oneEmployeeEEItemsDTOs);
             }
             return oneEmployeeEEItemsDTOs;
         }
@@ -86,19 +78,15 @@ namespace VROOM.Models.Services
                 {
                     EmployeeId = x.EmployeeId,
                     EquipmentItemId = x.EquipmentItemId,
-                    Status = ((EmployeeEquipmentStatus)x.Status).ToString(),
+                    StatusId = x.StatusId,
+                    Status = ((EmployeeEquipmentStatus)x.StatusId).ToString(),
                     DateBorrowed = x.DateBorrowed,
                     DateReturned = x.DateReturned
                 })
                 .ToListAsync();
             if (oneItemEEItemsDTOs != null)
             {
-                NestDTOsIn(oneItemEEItemsDTOs);
-                //foreach (EmployeeEquipmentItemDTO EEIDTO in oneItemEEItemsDTOs)
-                //{
-                //    EEIDTO.Employee = await _employee.GetSingleEmployee(EEIDTO.EmployeeId);
-                //    EEIDTO.EquipmentItem = await _equipmentItem.GetEquipmentItem(EEIDTO.EquipmentItemId);
-                //}
+                oneItemEEItemsDTOs = await NestDTOsIn(oneItemEEItemsDTOs);
             }
             return oneItemEEItemsDTOs;
         }
@@ -114,45 +102,78 @@ namespace VROOM.Models.Services
                 {
                     EmployeeId = x.EmployeeId,
                     EquipmentItemId = x.EquipmentItemId,
-                    Status = ((EmployeeEquipmentStatus)x.Status).ToString(),
+                    StatusId = x.StatusId,
+                    Status = ((EmployeeEquipmentStatus)x.StatusId).ToString(),
                     DateBorrowed = x.DateBorrowed,
                     DateReturned = x.DateReturned
                 })
                 .ToListAsync();
             if (oneEmployeeAndItemEEItemsDTOs != null)
             {
-                NestDTOsIn(oneEmployeeAndItemEEItemsDTOs);
-                //foreach (EmployeeEquipmentItemDTO EEIDTO in oneItemEEItemsDTOs)
-                //{
-                //    EEIDTO.Employee = await _employee.GetSingleEmployee(EEIDTO.EmployeeId);
-                //    EEIDTO.EquipmentItem = await _equipmentItem.GetEquipmentItem(EEIDTO.EquipmentItemId);
-                //}
+                oneEmployeeAndItemEEItemsDTOs = await NestDTOsIn(oneEmployeeAndItemEEItemsDTOs);
             }
             return oneEmployeeAndItemEEItemsDTOs;
         }
 
-        public Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecordsWithStatus(int statusId)
+        public async Task<List<EmployeeEquipmentItemDTO>> GetAllEmployeeEquipmentRecordsWith(EmployeeEquipmentStatus status)
+        {
+            List<EmployeeEquipmentItemDTO> EEItemsDTOsWithStatus = await _context.EmployeeEquipmentItem
+                .Where(x => x.StatusId == (int)status)
+                .Include(x => x.Employee)
+                .Include(x => x.EquipmentItem)
+                .Select(x => new EmployeeEquipmentItemDTO
+                {
+                    EmployeeId = x.EmployeeId,
+                    EquipmentItemId = x.EquipmentItemId,
+                    StatusId = x.StatusId,
+                    Status = ((EmployeeEquipmentStatus)x.StatusId).ToString(),
+                    DateBorrowed = x.DateBorrowed,
+                    DateReturned = x.DateReturned
+                })
+                .ToListAsync();
+            if (EEItemsDTOsWithStatus != null)
+            {
+                EEItemsDTOsWithStatus = await NestDTOsIn(EEItemsDTOsWithStatus);
+            }
+            return EEItemsDTOsWithStatus;
+        }
+
+        public async Task<EmployeeEquipmentItemDTO> SetEquipmentItemAsBorrowedBy(int employeeId, EmployeeEquipmentItemDTO EEItemDTO)
+        {
+            EEItemDTO.StatusId = (int)EmployeeEquipmentStatus.Borrowed;
+            EEItemDTO.DateBorrowed = DateTime.Now;
+            EmployeeEquipmentItem EEItem = ConvertFromDTOtoEntity(EEItemDTO);
+            _context.Entry(EEItem).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+            EEItemDTO.Status = ((EmployeeEquipmentStatus)EEItemDTO.StatusId).ToString();
+            return EEItemDTO;
+        }
+
+        public Task<EmployeeEquipmentItemDTO> UpdateEmployeeEquipmentItemRecord(int employeeId, EmployeeEquipmentItemDTO EEItemDTO)
         {
             throw new NotImplementedException();
         }
 
-        public Task<EmployeeEquipmentItemDTO> Create(EmployeeEquipmentItemDTO EEItemDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<EmployeeEquipmentItemDTO> Update(EmployeeEquipmentItemDTO EEItemDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-        private async void NestDTOsIn(List<EmployeeEquipmentItemDTO> EEItemDTOs)
+        private async Task<List<EmployeeEquipmentItemDTO>> NestDTOsIn(List<EmployeeEquipmentItemDTO> EEItemDTOs)
         {
             foreach (EmployeeEquipmentItemDTO EEIDTO in EEItemDTOs)
             {
                 EEIDTO.Employee = await _employee.GetSingleEmployee(EEIDTO.EmployeeId);
                 EEIDTO.EquipmentItem = await _equipmentItem.GetEquipmentItem(EEIDTO.EquipmentItemId);
             }
+            return EEItemDTOs;
+        }
+
+        private EmployeeEquipmentItem ConvertFromDTOtoEntity(EmployeeEquipmentItemDTO EEItemDTO)
+        {
+            return new EmployeeEquipmentItem()
+            {
+                EmployeeId = EEItemDTO.EmployeeId,
+                EquipmentItemId = EEItemDTO.EquipmentItemId,
+                StatusId = EEItemDTO.StatusId,
+                DateBorrowed = EEItemDTO.DateBorrowed,
+                DateReturned = EEItemDTO.DateReturned,
+            };
         }
     }
 }

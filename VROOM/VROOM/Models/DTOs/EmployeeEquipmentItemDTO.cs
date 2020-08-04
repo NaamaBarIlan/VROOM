@@ -11,6 +11,8 @@ namespace VROOM.Models.DTOs
 
         public int EquipmentItemId { get; set; }
 
+        public int StatusId { get; set; }
+
         public string Status { get; set; }
 
         public DateTime DateBorrowed { get; set; }

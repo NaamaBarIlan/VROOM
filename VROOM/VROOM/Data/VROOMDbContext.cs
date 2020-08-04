@@ -24,7 +24,7 @@ namespace VROOM.Data
                 {
                     EmployeeId = 1,
                     EquipmentItemId = 1,
-                    Status = (int)EmployeeEquipmentStatus.Borrowed,
+                    StatusId = (int)EmployeeEquipmentStatus.Borrowed,
                     DateBorrowed = DateTime.Today.AddDays(-2.0),
                     DateReturned = DateTime.Today
                 },
@@ -32,7 +32,7 @@ namespace VROOM.Data
                 {
                     EmployeeId = 1,
                     EquipmentItemId = 6,
-                    Status = (int)EmployeeEquipmentStatus.Borrowed,
+                    StatusId = (int)EmployeeEquipmentStatus.Borrowed,
                     DateBorrowed = DateTime.Today.AddDays(-2.0),
                     DateReturned = DateTime.Today
                 },
@@ -40,7 +40,7 @@ namespace VROOM.Data
                 {
                     EmployeeId = 2,
                     EquipmentItemId = 4,
-                    Status = (int)EmployeeEquipmentStatus.Borrowed,
+                    StatusId = (int)EmployeeEquipmentStatus.Borrowed,
                     DateBorrowed = DateTime.Today.AddDays(-2.0),
                     DateReturned = DateTime.Today
                 }

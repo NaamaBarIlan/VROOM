@@ -22,7 +22,7 @@ namespace VROOM.Models
 
         public int EquipmentItemId { get; set; }
 
-        public int Status { get; set; }
+        public int StatusId { get; set; }
 
         public DateTime DateBorrowed { get; set; }
 
