@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VROOM.Migrations
 {
-    public partial class reseedingDatabase : Migration
+    public partial class addAllTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -248,10 +248,10 @@ namespace VROOM.Migrations
                 columns: new[] { "EmployeeId", "EquipmentItemId", "DateBorrowed", "DateReturned", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2020, 7, 25, 17, 21, 23, 217, DateTimeKind.Local).AddTicks(4061), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 2, 4, new DateTime(2020, 8, 2, 17, 21, 23, 221, DateTimeKind.Local).AddTicks(9570), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 3, 4, new DateTime(2020, 7, 20, 17, 21, 23, 221, DateTimeKind.Local).AddTicks(9578), new DateTime(2020, 7, 26, 17, 21, 23, 221, DateTimeKind.Local).AddTicks(9581), 2 },
-                    { 1, 6, new DateTime(2020, 8, 3, 17, 21, 23, 221, DateTimeKind.Local).AddTicks(9466), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 }
+                    { 1, 1, new DateTime(2020, 7, 26, 9, 13, 11, 807, DateTimeKind.Local).AddTicks(5896), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, 4, new DateTime(2020, 8, 3, 9, 13, 11, 810, DateTimeKind.Local).AddTicks(7129), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 3, 4, new DateTime(2020, 7, 21, 9, 13, 11, 810, DateTimeKind.Local).AddTicks(7137), new DateTime(2020, 7, 27, 9, 13, 11, 810, DateTimeKind.Local).AddTicks(7141), 2 },
+                    { 1, 6, new DateTime(2020, 8, 4, 9, 13, 11, 810, DateTimeKind.Local).AddTicks(7040), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 }
                 });
 
             migrationBuilder.CreateIndex(

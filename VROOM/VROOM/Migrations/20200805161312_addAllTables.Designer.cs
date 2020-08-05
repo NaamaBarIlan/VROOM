@@ -10,8 +10,8 @@ using VROOM.Data;
 namespace VROOM.Migrations
 {
     [DbContext(typeof(VROOMDbContext))]
-    [Migration("20200805002123_reseedingDatabase")]
-    partial class reseedingDatabase
+    [Migration("20200805161312_addAllTables")]
+    partial class addAllTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -337,7 +337,7 @@ namespace VROOM.Migrations
                         {
                             EmployeeId = 1,
                             EquipmentItemId = 1,
-                            DateBorrowed = new DateTime(2020, 7, 25, 17, 21, 23, 217, DateTimeKind.Local).AddTicks(4061),
+                            DateBorrowed = new DateTime(2020, 7, 26, 9, 13, 11, 807, DateTimeKind.Local).AddTicks(5896),
                             DateReturned = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StatusId = 1
                         },
@@ -345,7 +345,7 @@ namespace VROOM.Migrations
                         {
                             EmployeeId = 1,
                             EquipmentItemId = 6,
-                            DateBorrowed = new DateTime(2020, 8, 3, 17, 21, 23, 221, DateTimeKind.Local).AddTicks(9466),
+                            DateBorrowed = new DateTime(2020, 8, 4, 9, 13, 11, 810, DateTimeKind.Local).AddTicks(7040),
                             DateReturned = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StatusId = 1
                         },
@@ -353,7 +353,7 @@ namespace VROOM.Migrations
                         {
                             EmployeeId = 2,
                             EquipmentItemId = 4,
-                            DateBorrowed = new DateTime(2020, 8, 2, 17, 21, 23, 221, DateTimeKind.Local).AddTicks(9570),
+                            DateBorrowed = new DateTime(2020, 8, 3, 9, 13, 11, 810, DateTimeKind.Local).AddTicks(7129),
                             DateReturned = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StatusId = 1
                         },
@@ -361,8 +361,8 @@ namespace VROOM.Migrations
                         {
                             EmployeeId = 3,
                             EquipmentItemId = 4,
-                            DateBorrowed = new DateTime(2020, 7, 20, 17, 21, 23, 221, DateTimeKind.Local).AddTicks(9578),
-                            DateReturned = new DateTime(2020, 7, 26, 17, 21, 23, 221, DateTimeKind.Local).AddTicks(9581),
+                            DateBorrowed = new DateTime(2020, 7, 21, 9, 13, 11, 810, DateTimeKind.Local).AddTicks(7137),
+                            DateReturned = new DateTime(2020, 7, 27, 9, 13, 11, 810, DateTimeKind.Local).AddTicks(7141),
                             StatusId = 2
                         });
                 });
