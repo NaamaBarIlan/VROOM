@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@*Declaring this page to use a list of employees*@
+@model List<VROOM.Models.DTOs.EmployeeDTO>
+
+<!Doctype html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/Styles/StyleSheet.css" type="text/css" />
+    <title>Class demo</title>
+</head>
+
+<body>
+    <h1>Welcome to my Website</h1>
+
+    @*Razor Syntax*@
+
+    @foreach (var item in Model)
+    {
+        <h3>@item.FirstName @item.LastName</h3>
+        <p>@item.Title</p>
+        <hr />
+    }
+
+</body>
+</html>
