@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,8 +7,7 @@ namespace VROOM.Models
 {
     public enum EmployeeEquipmentStatus
     {
-        Available = 0,
-        Borrowed,
+        Borrowed = 0,
         Returned,
         Lost,
         Stolen,
