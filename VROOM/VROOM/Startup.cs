@@ -50,6 +50,7 @@ namespace VROOM
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<VROOMDbContext>()
                 .AddDefaultTokenProviders();
