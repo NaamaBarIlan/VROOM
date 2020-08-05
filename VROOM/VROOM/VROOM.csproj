@@ -1,22 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>8638af13-b255-4fc6-953a-aa7826a9e3e1</UserSecretsId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Migrations\**" />
-    <Content Remove="Migrations\**" />
-    <EmbeddedResource Remove="Migrations\**" />
-    <None Remove="Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Migrations\20200805161312_addAllTables.cs" />
-    <Compile Include="Migrations\20200805161312_addAllTables.Designer.cs" />
-    <Compile Include="Migrations\VROOMDbContextModelSnapshot.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.6" />
