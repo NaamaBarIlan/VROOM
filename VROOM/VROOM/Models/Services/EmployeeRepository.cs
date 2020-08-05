@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +36,7 @@ namespace VROOM.Models.Services
         {
             Employee employee = await _context.Employee.FindAsync(id);
 
-            if(employee == null)
+            if (employee == null)
             {
                 return;
             }
@@ -49,10 +51,10 @@ namespace VROOM.Models.Services
         {
             var employees = await _context.Employee.ToListAsync();
 
-            if(employees.Count < 1)
-            {
-                return null;
-            };
+            //if (employees.Count < 1)
+            //{
+            //    return;
+            //}
 
             List<EmployeeDTO> employeeDTOs = new List<EmployeeDTO>();
             foreach (var item in employees)
