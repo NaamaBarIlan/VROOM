@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using VROOM.Models;
 using VROOM.Models.DTOs;
 using VROOM.Models.Interfaces;
@@ -18,9 +20,15 @@ namespace VROOM.Controllers
 
         private readonly IEmployee _employee;
 
-        public EmployeeController(IEmployee employee)
+        private IEmailSender _emailSenderService;
+
+        private IConfiguration _config;
+
+        public EmployeeController(IEmployee employee, IEmailSender emailSenderService, IConfiguration configuration)
         {
             _employee = employee;
+            _emailSenderService = emailSenderService;
+            _config = configuration;
         }
 
         // GET: api/employee
@@ -76,7 +84,20 @@ namespace VROOM.Controllers
         {
             await _employee.CreateEmployee(employeeDTO);
 
+            // When we create a new employee, lets email the new employee to welcome them to the company
+            string subject = "Welcome to VROOM!";
+            string htmlMessage = $"<h1>Welcome to the family {employeeDTO.FirstName}!!</h1>";
+
+            await _emailSenderService.SendEmailAsync(employeeDTO.Email, subject, htmlMessage);
+
+            // Send the CEO an email to notify them of new employee
+            string subject2 = "New employee alert";
+            string htmlMessage2 = $"<p>We have a new employee by the name of {employeeDTO.FirstName}</p>";
+
+            await _emailSenderService.SendEmailAsync(_config["CorporateEmail"], subject2, htmlMessage2);
+
             return CreatedAtAction("GetEmployee", new { id = employeeDTO.Id }, employeeDTO);
+
         }
 
         // DELETE: api/employee/3
