@@ -84,6 +84,7 @@ namespace VROOM.Controllers
                 //sign the user in if it was successful.
                 await _signInManager.SignInAsync(user, false);
 
+                // Send registration confirmation to new user
                 string subject = "Welcome to VROOM!";
                 string htmlMessage = $"<h1>CONGRATULATIONS {user.FirstName}</h1>";
 
