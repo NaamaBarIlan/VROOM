@@ -4,8 +4,11 @@
 @{
 }
 
+@*Declaring this page to use a list of employees*@
+@model VROOM.ViewModels.AllData
 
 <!Doctype html>
+
 <html>
 <head>
     <link rel="stylesheet" href="~/Styles/reset.css" type="text/css" />
@@ -23,18 +26,26 @@
         <a href="About">About Us</a>
     </header>
     <main>
-        <div id="home">
-        <p>
-            In a time when more and more companies are moving towards a remote work environment, they need new ways to organize. VROOM (Virtual Open Office Manager) makes it easier for small businesses to switch to all remote office operations. VROOM offers companies the ability to keep an inventory on equipment that gets borrowed.
-        </p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Trollback_%2B_Company_office.JPG/1280px-Trollback_%2B_Company_office.JPG" alt="Office"/>
-        </div>
+        @*Razor Syntax*@
+
+        @foreach (var employee in Model.EmployeeList)
+        {
+            <h3>@employee.FirstName @employee.LastName</h3>
+            <p>Title: @employee.Title</p>
+            <p>Department: @employee.Dept</p>
+            <p>Status: @employee.Status</p>
+            <p>Branch: @employee.BranchName</p>
+            <hr />
+        }
+
+        @foreach (var equipment in Model.EquipmentList)
+        {
+            <h3>@equipment.Name</h3>
+            <p>Value: $@equipment.Value</p>
+        }
     </main>
     <footer>
 
     </footer>
-
-
-
 </body>
 </html>

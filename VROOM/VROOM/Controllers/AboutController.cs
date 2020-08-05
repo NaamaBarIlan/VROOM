@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace VROOM.Controllers
 {
     [AllowAnonymous]
-    public class HomeController : Controller
+    public class AboutController : Controller
     {
         public IActionResult Index()
         {
