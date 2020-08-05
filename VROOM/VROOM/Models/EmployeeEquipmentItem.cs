@@ -7,8 +7,7 @@ namespace VROOM.Models
 {
     public enum EmployeeEquipmentStatus
     {
-        Available = 0,
-        Borrowed,
+        Borrowed = 0,
         Returned,
         Lost,
         Stolen,

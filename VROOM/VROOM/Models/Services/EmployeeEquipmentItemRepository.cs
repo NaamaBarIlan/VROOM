@@ -152,6 +152,11 @@ namespace VROOM.Models.Services
 
         public async Task<EmployeeEquipmentItemDTO> SetEquipmentItemAsBorrowedBy(int employeeId, EmployeeEquipmentItemDTO EEItemDTO)
         {
+            if (!await CheckIfItemIsAvailable(EEItemDTO.EquipmentItemId))
+            {
+                //client is asking to borrow a piece of equipment not available, but there's no way of knowing that record's CKs
+                return null;
+            }
             EEItemDTO.StatusId = (int)EmployeeEquipmentStatus.Borrowed;
             EEItemDTO.DateBorrowed = DateTime.Now;
             EmployeeEquipmentItem EEItem = ConvertFromDTOtoEntity(EEItemDTO);
@@ -164,6 +169,10 @@ namespace VROOM.Models.Services
         public async Task<EmployeeEquipmentItemDTO> UpdateEmployeeEquipmentItemRecord(EmployeeEquipmentItemDTO EEItemDTO)
         {
             EmployeeEquipmentItem EEItem = await _context.FindAsync<EmployeeEquipmentItem>(EEItemDTO.EmployeeId, EEItemDTO.EquipmentItemId, EEItemDTO.DateBorrowed);
+            if (EEItem.StatusId == (int)EmployeeEquipmentStatus.Returned)
+            {
+                return ConvertFromEntityToDTO(EEItem);
+            }
             if (EEItemDTO.StatusId == (int)EmployeeEquipmentStatus.Returned)
             {
                 EEItemDTO.DateReturned = DateTime.Now;
@@ -218,7 +227,7 @@ namespace VROOM.Models.Services
             }
             else
             {
-                return mostRecentActivityItem.StatusId == (int)EmployeeEquipmentStatus.Available;
+                return mostRecentActivityItem.StatusId == (int)EmployeeEquipmentStatus.Returned;
             }
         }
 

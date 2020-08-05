@@ -437,4 +437,7 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+# ASP.Net Core MVC Web App
+VROOM/VROOM/Migrations
+
 # End of https://www.toptal.com/developers/gitignore/api/linux,macos,windows,visualstudio,visualstudiocode
