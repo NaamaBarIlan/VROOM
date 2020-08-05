@@ -36,7 +36,7 @@ namespace VROOM
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(options =>
+            services.AddControllersWithViews(options =>
             {
                 //Make all routes by default autorized to require login:
                 options.Filters.Add(new AuthorizeFilter());
@@ -49,6 +49,9 @@ namespace VROOM
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<VROOMDbContext>()
@@ -100,10 +103,23 @@ namespace VROOM
                 app.UseDeveloperExceptionPage();
             }
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // VERY IMPORTANT
+            app.UseStaticFiles();
 
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             RoleInitializer.SeedData(serviceProvider, userManager, Configuration);

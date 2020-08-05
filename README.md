@@ -81,6 +81,11 @@ Microsoft Visual Studio Community 2019
 - Entity Framework
 - MVC
 - xUnit
+- SendGrid
+- Swagger
+- Razor views
+- Microsoft Azure
+- SQL Server
 
 
 ---
@@ -123,19 +128,53 @@ User stories can be found in this [link](https://trello.com/b/x6A2dKi8/vroom-401
 
 #### EmployeeEquipment Table
 
-| | Create | Read  | Update | Delete |
-| ------------- |:-------------:| :-----:|:-------------:| :-----:|
-| CEO  | Yes | Yes | Yes |  |
-| Office Manager    | Yes | Yes | Yes |  |
-| Employee  |  | Yes* | Yes* |  |
+| | Create | Read  | Update |
+| ------------- |:-------------:| :-----:|:-------------:|
+| CEO  | Yes | Yes | Yes |
+| Office Manager    | Yes | Yes | Yes |
+| Employee  |  | Yes* | Yes* |
+
+#### UserAccount Table
+
+| | Login | Register  | AssignRole |
+| ------------- |:-------------:| :-----:|:-------------:|
+| CEO  | Yes | CEO, Office Manager, Employee | CEO, Office Manager, Employee |
+| Office Manager    | Yes | Employee | Employee |
+| Employee  | Yes |  |  |
 
 ---
 
 ## Change Log
 
-1.2: *Added User Roles & Permissions to README* - 2 Aug 2020
+##### 5 Aug 2020
+- 4.0: *Added Swagger UI via Swashbuckle.AspNetCore. It interprets Swagger JSON. It interprets Swagger JSONto build a rich, customizable experience for describing the web API functionality. It includes build-in test harnesses for public methods.*
 
-1.1: *Added an ERD and UMD images, software requirements and a link to user stories in a project management board* - 31 Jul 2020  
+##### 4 Aug 2020
+- 3.6: *EmployeeEquipmentItem service testing - incomplete.*
+- 3.5: *Added summary notes to the IEmployee Interface.*
+- 3.4: *Policy layers added for EmployeeEquipmentItemController.cs. Added new welcome email message for new created personnel, relayed response back to corporate.*
+- 3.3: *EmployeeEquipmentItem full CRUD. All CRUD methods tested in EquipmentItem table and Employee table.*
+- 3.2: *Added SendGrid functionality.*
+- 3.1: *Added AccountController: Register, Login, AssignRoleToUser, CreateToken, AuthenticateToken. Added AssignRoleDTO, LoginDTO, RegisterDTO. Added roles and permissions in Startup.cs, ApplicationUser.cs and RoleInitializer.cs. Seeded roles complete. Tested all AccountController user permissions.*
+- 3.0: *Added error handling to the EmployeeController.*
+
+##### 3 Aug 2020
+- 2.9: *EmployeeEquipmentItem partial CRUD. EEItem CRUD, except for update.*
+- 2.8: *Updated CreateEmployee method to return the new employee Id from the db.*
+- 2.7: *Fixed an error in EquipmentItems create method. Creating a new EquipmentItem now returns the id of the new piece of equipment.*
+- 2.6: *All CRUD operations tests are passing. Added 7 unit tests passing to the Employee service.*
+- 2.5: *UnitTests written/passing for EquipmentItems routes.*
+- 2.4: *Fixing extra index in EEI table.*
+- 2.3: *Entity, DTO, and Interface.*
+- 2.2: *Added properties to Employee.cs and EmployeeDTO.cs. Added seeded data migration. Merge branch 'Staging'.*
+- 2.1: *Changes made for EquipmentItem Model. Changes made to EquipmentItem.cs, IEquipmentItem.cs, EquipmentItemDTO.cs and EquipmentItemRepository.cs. Set up EquipmentItemController.cs. Changes made to VROOMDbContext.cs and seed data added to the Database.*
+- 2.0: *Initial commit, added configuration settings for Startup.cs and VROOMDbContext.cs, added Models, Employee.cs, EquipmentItem.cs, EmployeeEquipmentItem.cs, added according Interfaces, DTOs and Services. Initial data seeded into the Db. File tree established.*
+
+##### 2 Aug 2020
+- 1.2: *Added User Roles & Permissions to README*
+
+##### 31 Jul 2020
+- 1.1: *Added an ERD and UMD images, software requirements and a link to user stories in a project management board*
 
 ---
 
