@@ -36,7 +36,7 @@ namespace VROOM
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(options =>
+            services.AddControllersWithViews(options =>
             {
                 //Make all routes by default autorized to require login:
                 options.Filters.Add(new AuthorizeFilter());
@@ -104,6 +104,9 @@ namespace VROOM
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // VERY IMPORTANT
+            app.UseStaticFiles();
 
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             RoleInitializer.SeedData(serviceProvider, userManager, Configuration);
