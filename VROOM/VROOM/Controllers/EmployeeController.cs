@@ -63,11 +63,11 @@ namespace VROOM.Controllers
                 return BadRequest();
             }
 
-            // An employees can only update their own data:
-            // TODO - pull the data directly from from User via _userManager
-            if (User.IsInRole("Employee"))
+            // An employee can only update their own data:
+             if (User.IsInRole("Employee"))
             {
                 string userId =  _userManager.GetUserId(User);
+                // TODO - pull the data directly from from User via _userManager
                 //var user = await _userManager.FindByIdAsync(userId);
                 //string userEmail = await _userManager.GetEmailAsync(user);
 
