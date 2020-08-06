@@ -156,7 +156,8 @@ namespace VROOM.Controllers
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("FirstName", user.FirstName),
                 new Claim("LastName", user.LastName),
-                new Claim("UserId", user.Id)
+                new Claim("UserId", user.Id),
+                new Claim("UserEmail", user.Email)
                 //optional, add fav-color claim
             };
 
