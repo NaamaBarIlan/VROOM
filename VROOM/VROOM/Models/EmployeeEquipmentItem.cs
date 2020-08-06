@@ -15,6 +15,13 @@ namespace VROOM.Models
         Sold
     }
 
+    public enum EmployeeEquipmentRecordStatus
+    {
+        Closed = 0,
+        Open,
+        Indeterminate
+    }
+
     public class EmployeeEquipmentItem
     {
         //CK
@@ -28,7 +35,9 @@ namespace VROOM.Models
 
         public int StatusId { get; set; }
 
-        public DateTime DateReturned { get; set; }
+        public int RecordStatusId { get; set; }
+
+        public DateTime DateRecordClosed { get; set; }
 
         //Navigation properties
         public Employee Employee { get; set; }

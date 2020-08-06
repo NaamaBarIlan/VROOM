@@ -126,50 +126,40 @@ namespace VROOM.Controllers
         // PUT: api/EmployeeEquipmentItem/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{equipmentItemId}")]
+        [HttpPut("Employee/{employeeId}/UpdateItem/{equipmentItemId}/Status/{statusId}")]
         [Authorize(Policy = "BronzeLevel")]
-        public async Task<ActionResult<EmployeeEquipmentItemDTO>> UpdateEmployeeEquipmentItem(int equipmentItemId, EmployeeEquipmentItemDTO EEItemDTO)
+        public async Task<ActionResult<EmployeeEquipmentItemDTO>> UpdateEmployeeEquipmentItem(int employeeId, int equipmentItemId, int statusId)
         {
-            if (equipmentItemId != EEItemDTO.EquipmentItemId)
-            {
-                return BadRequest("EquipmentItemIDs must match.");
-            }
-            if (await _employeeEquipmentItem.CheckIfItemIsAvailable(equipmentItemId))
+            var updateableItemDTO = await _employeeEquipmentItem.GetUpdatableItem(employeeId, equipmentItemId);
+            if (updateableItemDTO == null)
             {
                 return BadRequest("No updatable items found for that EquipmentItemID and EmployeeID combination.");
             }
             else
             {
-                //var EEItemDTOToBeUpdated = returnAbleItemForEmployeeDTOs.First();
-                //EEItemDTOToBeUpdated.StatusId = EEItemDTO.StatusId;
-                //var updatedEEItemDTO = await _employeeEquipmentItem.UpdateEmployeeEquipmentItemRecord(EEItemDTOToBeUpdated);
-                //SendNotificationEmail(updatedEEItemDTO);
-                //return updatedEEItemDTO;
-                return null;
+                updateableItemDTO.StatusId = statusId;
+                var updatedEEItemDTO = await _employeeEquipmentItem.UpdateEmployeeEquipmentItemRecord(updateableItemDTO);
+                SendNotificationEmail(updatedEEItemDTO);
+                return updatedEEItemDTO;
             }
         }
 
         // PUT: api/EmployeeEquipmentItem/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("/Employee/{employeeId}/ReturnItem/{equipmentItemId}/")]
+        [HttpPut("Employee/{employeeId}/ReturnItem/{equipmentItemId}/")]
         [Authorize(Policy = "BronzeLevel")]
         public async Task<ActionResult<EmployeeEquipmentItemDTO>> ReturnEquipmentItem(int employeeId, int equipmentItemId)
         {
-            var returnAbleItemForEmployeeDTOs = await _employeeEquipmentItem.ListOfUpdatableItemsFor(employeeId, equipmentItemId);
-            //for a given EmployeeID-EquipmentItemID combination, there should only ever be 0 or 1 returnable items
-            if (returnAbleItemForEmployeeDTOs.Count < 1)
+            var returnableItemDTO = await _employeeEquipmentItem.GetReturnableItem(employeeId, equipmentItemId);
+            if (returnableItemDTO == null)
             {
-                return BadRequest("Entered data does not match any returnable items.");
-            }
-            else if (returnAbleItemForEmployeeDTOs.Count > 1)
-            {
-                return BadRequest("Database state invalid. More than one returnable item found for EquipmentItemID and EmployeeID combination.");
+                return BadRequest("No returnable items found for that EquipmentItemID and EmployeeID combination.");
             }
             else
             {
-                var EEItemDTOToBeReturned = returnAbleItemForEmployeeDTOs.First();
-                var updatedEEItemDTO = await _employeeEquipmentItem.ReturnItem(EEItemDTOToBeReturned);
+                var updatedEEItemDTO = await _employeeEquipmentItem.ReturnItem(returnableItemDTO);
+                SendNotificationEmail(updatedEEItemDTO);
                 return updatedEEItemDTO;
             }
         }
@@ -189,6 +179,13 @@ namespace VROOM.Controllers
                 case (int)EmployeeEquipmentStatus.Returned:
                     SendReturnedNotificationEmail(equipmentItemName, userEmail, sendEmail, firstName, lastName);
                     break;
+                case (int)EmployeeEquipmentStatus.Sold:
+                    SendSoldNotificationEmail(equipmentItemName, userEmail, sendEmail, firstName, lastName);
+                    break;
+                case (int)EmployeeEquipmentStatus.Stolen:
+                    break;
+                case (int)EmployeeEquipmentStatus.Lost:
+                    break;
                 default:
                     break;
             }
@@ -205,6 +202,13 @@ namespace VROOM.Controllers
         {
             string emailSubject = $"Equipment Notification - {equipmentItemName} Returned by {userEmail}";
             string emailHTMLBody = $"<p>This message is for {firstName} {lastName}</p><p>You've been marked in our Employee Equipment Item Manager (EEIM) system as having returned a {equipmentItemName}.</p><p>If you believe this is in error, please contact your manager.";
+            await _emailSenderService.SendEmailAsync(sendEmail, emailSubject, emailHTMLBody);
+        }
+
+        private async void SendSoldNotificationEmail(string equipmentItemName, string userEmail, string sendEmail, string firstName, string lastName)
+        {
+            string emailSubject = $"Equipment Notification - {equipmentItemName} Sold by {userEmail}";
+            string emailHTMLBody = $"<p>This message is for {firstName} {lastName}</p><p>You've been marked in our Employee Equipment Item Manager (EEIM) system as having sold a {equipmentItemName}.</p><p>If you believe this is in error, please contact your manager.";
             await _emailSenderService.SendEmailAsync(sendEmail, emailSubject, emailHTMLBody);
         }
     }
