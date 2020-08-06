@@ -47,7 +47,7 @@ namespace VROOM.Models.Services
                     StatusId = x.StatusId,
                     Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
                     DateBorrowed = x.DateBorrowed,
-                    DateReturned = x.DateReturned
+                    DateRecordClosed = x.DateRecordClosed
                 })
                 .ToListAsync();
             if (EEItemDTOs != null)
@@ -70,7 +70,7 @@ namespace VROOM.Models.Services
                     StatusId = x.StatusId,
                     Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
                     DateBorrowed = x.DateBorrowed,
-                    DateReturned = x.DateReturned
+                    DateRecordClosed = x.DateRecordClosed
                 })
                 .ToListAsync();
             if (oneEmployeeEEItemsDTOs != null)
@@ -93,7 +93,7 @@ namespace VROOM.Models.Services
                     StatusId = x.StatusId,
                     Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
                     DateBorrowed = x.DateBorrowed,
-                    DateReturned = x.DateReturned
+                    DateRecordClosed = x.DateRecordClosed
                 })
                 .ToListAsync();
             if (oneItemEEItemsDTOs != null)
@@ -117,7 +117,7 @@ namespace VROOM.Models.Services
                     StatusId = x.StatusId,
                     Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
                     DateBorrowed = x.DateBorrowed,
-                    DateReturned = x.DateReturned
+                    DateRecordClosed = x.DateRecordClosed
                 })
                 .ToListAsync();
             if (oneEmployeeAndItemEEItemsDTOs != null)
@@ -140,7 +140,7 @@ namespace VROOM.Models.Services
                     StatusId = x.StatusId,
                     Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
                     DateBorrowed = x.DateBorrowed,
-                    DateReturned = x.DateReturned
+                    DateRecordClosed = x.DateRecordClosed
                 })
                 .ToListAsync();
             if (EEItemsDTOsWithStatus != null)
@@ -160,6 +160,7 @@ namespace VROOM.Models.Services
             EEItemDTO.StatusId = (int)EmployeeEquipmentStatus.Borrowed;
             EEItemDTO.DateBorrowed = DateTime.Now;
             EmployeeEquipmentItem EEItem = ConvertFromDTOtoEntity(EEItemDTO);
+            EEItem.RecordStatusId = (int)EmployeeEquipmentRecordStatus.Open;
             _context.Entry(EEItem).State = EntityState.Added;
             await _context.SaveChangesAsync();
             EEItemDTO.Status = ((EmployeeEquipmentStatus)EEItemDTO.StatusId).ToString();
@@ -174,10 +175,13 @@ namespace VROOM.Models.Services
             {
                 return ConvertFromEntityToDTO(EEItem);
             }
-            if (EEItemDTO.StatusId == (int)EmployeeEquipmentStatus.Returned)
+            if (EEItemDTO.StatusId == (int)EmployeeEquipmentStatus.Returned || 
+                EEItemDTO.StatusId == (int)EmployeeEquipmentStatus.Destroyed || 
+                EEItemDTO.StatusId == (int)EmployeeEquipmentStatus.Sold)
             {
-                EEItemDTO.DateReturned = DateTime.Now;
-                EEItem.DateReturned = EEItemDTO.DateReturned;
+                EEItemDTO.DateRecordClosed = DateTime.Now;
+                EEItem.DateRecordClosed = EEItemDTO.DateRecordClosed;
+                EEItem.RecordStatusId = (int)EmployeeEquipmentRecordStatus.Closed;
             }
             EEItemDTO.Status = EmployeeEquipmentStatusStringFrom(EEItemDTO.StatusId);
             EEItem.StatusId = EEItemDTO.StatusId;
@@ -193,33 +197,68 @@ namespace VROOM.Models.Services
             return await UpdateEmployeeEquipmentItemRecord(EEItemDTO);
         }
 
-        public async Task<List<EmployeeEquipmentItemDTO>> ListOfUpdatableItemsFor(int employeeId, int equipmentItemId)
+        public async Task<EmployeeEquipmentItemDTO> GetReturnableItem(int employeeId, int equipmentItemId)
         {
-            var allItemsForEmployeeNotYetReturned = await _context.EmployeeEquipmentItem
+            //get most recent record for item
+            var mostRecentActivityItem = await _context.EmployeeEquipmentItem
                 .Where(x => x.EmployeeId == employeeId)
                 .Where(x => x.EquipmentItemId == equipmentItemId)
-                .Where(x => x.StatusId == (int)EmployeeEquipmentStatus.Returned)
-                .Select(x => new EmployeeEquipmentItemDTO
-                {
-                    EmployeeId = x.EmployeeId,
-                    EquipmentItemId = x.EquipmentItemId,
-                    StatusId = x.StatusId,
-                    Status = EmployeeEquipmentStatusStringFrom(x.StatusId),
-                    DateBorrowed = x.DateBorrowed,
-                    DateReturned = x.DateReturned
-                })
-                .ToListAsync();
-            return allItemsForEmployeeNotYetReturned;
+                .OrderByDescending(x => x.DateBorrowed)
+                .FirstOrDefaultAsync();
+            //if item has no record, it is not returnable
+            if (mostRecentActivityItem == null ||
+                (mostRecentActivityItem.StatusId != (int)EmployeeEquipmentStatus.Borrowed ||
+                 mostRecentActivityItem.RecordStatusId != (int)EmployeeEquipmentRecordStatus.Open))
+            {
+                return null;
+            }
+            else
+            {
+                //if most recent record shows it as being borrowed, and is open, item is returnable
+                return ConvertFromEntityToDTO(mostRecentActivityItem);
+            }
+        }
+
+        public async Task<EmployeeEquipmentItemDTO> GetUpdatableItem(int employeeId, int equipmentItemId)
+        {
+            //get most recent record for item
+            var mostRecentActivityItem = await _context.EmployeeEquipmentItem
+                .Where(x => x.EmployeeId == employeeId)
+                .Where(x => x.EquipmentItemId == equipmentItemId)
+                .OrderByDescending(x => x.DateBorrowed)
+                .FirstOrDefaultAsync();
+            //if item has no record, it is not returnable
+            if (mostRecentActivityItem == null)
+            {
+                return null;
+            }
+            //if most recent record shows it as sold or destroyed, not updatable
+            else if (mostRecentActivityItem.StatusId == (int)EmployeeEquipmentStatus.Destroyed ||
+                     mostRecentActivityItem.StatusId == (int)EmployeeEquipmentStatus.Sold)
+            {
+                return null;
+            }
+            //if most recent record has been closed, not updatable
+            else if (mostRecentActivityItem.RecordStatusId == (int)EmployeeEquipmentRecordStatus.Closed)
+            {
+                return null;
+            }
+            else
+            {
+                //if most recent record shows it as being borrowed, and is open, item is returnable
+                return ConvertFromEntityToDTO(mostRecentActivityItem);
+            }
         }
 
         public async Task<bool> CheckIfItemIsAvailable(int equipmentItemId)
         {
             var EItemDTO = await _equipmentItem.GetEquipmentItem(equipmentItemId);
-            //if item doesn't exist at all
+            //if item doesn't exist at all, it is not available
             if (EItemDTO == null)
             {
                 return false;
             }
+            //get most recent returned record for item
             var mostRecentActivityItem = await _context.EmployeeEquipmentItem
                 .Where(x => x.EquipmentItemId == equipmentItemId)
                 .OrderByDescending(x => x.DateBorrowed)
@@ -231,7 +270,9 @@ namespace VROOM.Models.Services
             }
             else
             {
-                return mostRecentActivityItem.StatusId != (int)EmployeeEquipmentStatus.Borrowed;
+                //if most recent record has been closed, item is available to be borrowed
+                return (mostRecentActivityItem.StatusId == (int)EmployeeEquipmentStatus.Returned && 
+                        mostRecentActivityItem.RecordStatusId == (int)EmployeeEquipmentRecordStatus.Closed);
             }
         }
 
@@ -277,7 +318,7 @@ namespace VROOM.Models.Services
                 EquipmentItemId = EEItemDTO.EquipmentItemId,
                 StatusId = EEItemDTO.StatusId,
                 DateBorrowed = EEItemDTO.DateBorrowed,
-                DateReturned = EEItemDTO.DateReturned,
+                DateRecordClosed = EEItemDTO.DateRecordClosed,
             };
         }
 
@@ -298,7 +339,7 @@ namespace VROOM.Models.Services
                 EquipmentItemId = EEItem.EquipmentItemId,
                 StatusId = EEItem.StatusId,
                 DateBorrowed = EEItem.DateBorrowed,
-                DateReturned = EEItem.DateReturned,
+                DateRecordClosed = EEItem.DateRecordClosed,
             };
         }
 

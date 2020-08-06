@@ -25,21 +25,24 @@ namespace VROOM.Data
                     EmployeeId = 1,
                     EquipmentItemId = 1,
                     DateBorrowed = DateTime.Now.AddDays(-10.0),
-                    StatusId = (int)EmployeeEquipmentStatus.Borrowed
+                    StatusId = (int)EmployeeEquipmentStatus.Borrowed,
+                    RecordStatusId = (int)EmployeeEquipmentRecordStatus.Open
                 },
                 new EmployeeEquipmentItem
                 {
                     EmployeeId = 1,
                     EquipmentItemId = 6,
                     DateBorrowed = DateTime.Now.AddDays(-1.0),
-                    StatusId = (int)EmployeeEquipmentStatus.Borrowed
+                    StatusId = (int)EmployeeEquipmentStatus.Borrowed,
+                    RecordStatusId = (int)EmployeeEquipmentRecordStatus.Open
                 },
                 new EmployeeEquipmentItem
                 {
                     EmployeeId = 2,
                     EquipmentItemId = 4,
                     DateBorrowed = DateTime.Now.AddDays(-2.0),
-                    StatusId = (int)EmployeeEquipmentStatus.Borrowed
+                    StatusId = (int)EmployeeEquipmentStatus.Borrowed,
+                    RecordStatusId = (int)EmployeeEquipmentRecordStatus.Open
                 },
                 new EmployeeEquipmentItem
                 {
@@ -47,7 +50,8 @@ namespace VROOM.Data
                     EquipmentItemId = 4,
                     DateBorrowed = DateTime.Now.AddDays(-15.0),
                     StatusId = (int)EmployeeEquipmentStatus.Returned,
-                    DateReturned = DateTime.Now.AddDays(-9.0)
+                    RecordStatusId = (int)EmployeeEquipmentRecordStatus.Closed,
+                    DateRecordClosed = DateTime.Now.AddDays(-9.0)
                 }
             );
 

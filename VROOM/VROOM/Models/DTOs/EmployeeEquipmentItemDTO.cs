@@ -17,7 +17,7 @@ namespace VROOM.Models.DTOs
 
         public DateTime DateBorrowed { get; set; }
 
-        public DateTime DateReturned { get; set; }
+        public DateTime DateRecordClosed { get; set; }
 
         public EmployeeDTO Employee { get; set; }
 

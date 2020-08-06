@@ -124,6 +124,14 @@ namespace VROOM.Models.Interfaces
         /// <returns>
         /// List<EmployeeEquipmentItemDTO>: a list of DTOs, should only have .Count 0 or 1
         /// </returns>
-        Task<List<EmployeeEquipmentItemDTO>> ListOfUpdatableItemsFor(int employeeId, int equipmentItemId);
+        //Task<List<EmployeeEquipmentItemDTO>> ListOfUpdatableItemsFor(int employeeId, int equipmentItemId);
+
+        //Task<bool> CheckIfItemIsUpdatable(int equipmentItemId);
+
+        //Task<bool> CheckIfItemIsReturnable(int employeeId, int equipmentItemId);
+
+        Task<EmployeeEquipmentItemDTO> GetReturnableItem(int employeeId, int equipmentItemId);
+
+        Task<EmployeeEquipmentItemDTO> GetUpdatableItem(int employeeId, int equipmentItemId);
     }
 }
