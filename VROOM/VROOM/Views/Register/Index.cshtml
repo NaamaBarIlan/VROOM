@@ -4,7 +4,7 @@
 @{
 }
 
-@model VROOM.Models.DTOs.LoginDTO
+@model VROOM.Models.DTOs.RegisterDTO
 
 <!Doctype html>
 <html>
@@ -39,12 +39,14 @@
     <main>
         <div class="form">
             <div>
-                <form asp-action="Login" method="post">
-                    <h2>Login</h2>
+                <form asp-action="Register" method="post">
+                    <h2>Register new account</h2>
+                    <input type="text" placeholder="First Name" asp-for="FirstName">
+                    <input type="text" placeholder="Last Name" asp-for="LastName">
                     <input type="text" placeholder="Email" asp-for="Email">
                     <input type="password" placeholder="Password" asp-for="Password">
-                    <button type="submit">Sign In</button>
-                    @*<a>Forgot your password?</a>*@
+                    <input type="text" placeholder="Role" asp-for="Role">
+                    <button>Register</button>
                 </form>
             </div>
         </div>
