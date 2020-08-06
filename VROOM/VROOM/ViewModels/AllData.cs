@@ -10,5 +10,6 @@ namespace VROOM.ViewModels
     {
         public List<EmployeeDTO> EmployeeList { get; set; }
         public List<EquipmentItemDTO> EquipmentList { get; set; }
+        public List<EmployeeEquipmentItemDTO> EmployeeEquipmentList { get; set; }
     }
 }
