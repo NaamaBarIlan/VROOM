@@ -6,19 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\**" />
-    <Content Remove="Migrations\**" />
-    <EmbeddedResource Remove="Migrations\**" />
-    <None Remove="Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Migrations\20200806164140_addedAllTables.cs" />
-    <Compile Include="Migrations\20200806164140_addedAllTables.Designer.cs" />
-    <Compile Include="Migrations\VROOMDbContextModelSnapshot.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\images\company_office.jpg" />
     <None Include="wwwroot\images\logo_transparent.png" />
     <None Include="wwwroot\images\office.jpg" />
