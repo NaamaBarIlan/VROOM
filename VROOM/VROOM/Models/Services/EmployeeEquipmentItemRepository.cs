@@ -163,7 +163,8 @@ namespace VROOM.Models.Services
             _context.Entry(EEItem).State = EntityState.Added;
             await _context.SaveChangesAsync();
             EEItemDTO.Status = ((EmployeeEquipmentStatus)EEItemDTO.StatusId).ToString();
-            return EEItemDTO;
+            var EEItemDTOWithEquipmentItem = await AddEquipmentItem(EEItemDTO);
+            return EEItemDTOWithEquipmentItem;
         }
 
         public async Task<EmployeeEquipmentItemDTO> UpdateEmployeeEquipmentItemRecord(EmployeeEquipmentItemDTO EEItemDTO)
@@ -182,7 +183,8 @@ namespace VROOM.Models.Services
             EEItem.StatusId = EEItemDTO.StatusId;
             _context.Entry(EEItem).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return EEItemDTO;
+            var EEItemDTOWithEquipmentItem = await AddEquipmentItem(EEItemDTO);
+            return EEItemDTOWithEquipmentItem;
         }
 
         public async Task<EmployeeEquipmentItemDTO> ReturnItem(EmployeeEquipmentItemDTO EEItemDTO)
@@ -196,7 +198,7 @@ namespace VROOM.Models.Services
             var allItemsForEmployeeNotYetReturned = await _context.EmployeeEquipmentItem
                 .Where(x => x.EmployeeId == employeeId)
                 .Where(x => x.EquipmentItemId == equipmentItemId)
-                .Where(x => x.StatusId != (int)EmployeeEquipmentStatus.Returned)
+                .Where(x => x.StatusId == (int)EmployeeEquipmentStatus.Returned)
                 .Select(x => new EmployeeEquipmentItemDTO
                 {
                     EmployeeId = x.EmployeeId,
@@ -213,6 +215,7 @@ namespace VROOM.Models.Services
         public async Task<bool> CheckIfItemIsAvailable(int equipmentItemId)
         {
             var EItemDTO = await _equipmentItem.GetEquipmentItem(equipmentItemId);
+            //if item doesn't exist at all
             if (EItemDTO == null)
             {
                 return false;
@@ -221,13 +224,14 @@ namespace VROOM.Models.Services
                 .Where(x => x.EquipmentItemId == equipmentItemId)
                 .OrderByDescending(x => x.DateBorrowed)
                 .FirstOrDefaultAsync();
+            //if item has no record, it is available to be borrowed
             if (mostRecentActivityItem == null)
             {
                 return true;
             }
             else
             {
-                return mostRecentActivityItem.StatusId == (int)EmployeeEquipmentStatus.Returned;
+                return mostRecentActivityItem.StatusId != (int)EmployeeEquipmentStatus.Borrowed;
             }
         }
 
@@ -248,6 +252,12 @@ namespace VROOM.Models.Services
                 EEIDTO.EquipmentItem = await _equipmentItem.GetEquipmentItem(EEIDTO.EquipmentItemId);
             }
             return EEItemDTOs;
+        }
+
+        private async Task<EmployeeEquipmentItemDTO> AddEquipmentItem(EmployeeEquipmentItemDTO EEItemDTO)
+        {
+            EEItemDTO.EquipmentItem = await _equipmentItem.GetEquipmentItem(EEItemDTO.EquipmentItemId);
+            return EEItemDTO;
         }
 
         /// <summary>

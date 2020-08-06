@@ -10,6 +10,10 @@ using VROOM.Data;
 using VROOM.Models;
 using VROOM.Models.Interfaces;
 using VROOM.Models.DTOs;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.IdentityModel.JsonWebTokens;
+using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
 
 namespace VROOM.Controllers
 {
@@ -19,9 +23,15 @@ namespace VROOM.Controllers
     {
         private readonly IEmployeeEquipmentItem _employeeEquipmentItem;
 
-        public EmployeeEquipmentItemController(IEmployeeEquipmentItem employeeEquipmentItem)
+        private IEmailSender _emailSenderService;
+
+        private IConfiguration _config;
+
+        public EmployeeEquipmentItemController(IEmployeeEquipmentItem employeeEquipmentItem, IEmailSender emailSenderService, IConfiguration config)
         {
             _employeeEquipmentItem = employeeEquipmentItem;
+            _emailSenderService = emailSenderService;
+            _config = config;
         }
 
         // GET: api/EmployeeEquipmentItem
@@ -107,8 +117,9 @@ namespace VROOM.Controllers
             }
             else
             {
-                EEItemDTO = await _employeeEquipmentItem.SetEquipmentItemAsBorrowedBy(employeeId, EEItemDTO);
-                return EEItemDTO;
+                var updatedEEItemDTO = await _employeeEquipmentItem.SetEquipmentItemAsBorrowedBy(employeeId, EEItemDTO);
+                SendNotificationEmail(updatedEEItemDTO);
+                return updatedEEItemDTO;
             }
         }
 
@@ -123,22 +134,18 @@ namespace VROOM.Controllers
             {
                 return BadRequest("EquipmentItemIDs must match.");
             }
-            var returnAbleItemForEmployeeDTOs = await _employeeEquipmentItem.ListOfUpdatableItemsFor(EEItemDTO.EmployeeId, equipmentItemId);
-            //for a given EmployeeID-EquipmentItemID combination, there should only ever be 0 or 1 returnable items
-            if (returnAbleItemForEmployeeDTOs.Count < 1)
+            if (await _employeeEquipmentItem.CheckIfItemIsAvailable(equipmentItemId))
             {
                 return BadRequest("No updatable items found for that EquipmentItemID and EmployeeID combination.");
             }
-            else if (returnAbleItemForEmployeeDTOs.Count > 1)
-            {
-                return BadRequest("Database state invalid. More than one returnable item found for EquipmentItemID and EmployeeID combination.");
-            }
             else
             {
-                var EEItemDTOToBeUpdated = returnAbleItemForEmployeeDTOs.First();
-                EEItemDTOToBeUpdated.StatusId = EEItemDTO.StatusId;
-                var updatedEEItemDTO = await _employeeEquipmentItem.UpdateEmployeeEquipmentItemRecord(EEItemDTOToBeUpdated);
-                return updatedEEItemDTO;
+                //var EEItemDTOToBeUpdated = returnAbleItemForEmployeeDTOs.First();
+                //EEItemDTOToBeUpdated.StatusId = EEItemDTO.StatusId;
+                //var updatedEEItemDTO = await _employeeEquipmentItem.UpdateEmployeeEquipmentItemRecord(EEItemDTOToBeUpdated);
+                //SendNotificationEmail(updatedEEItemDTO);
+                //return updatedEEItemDTO;
+                return null;
             }
         }
 
@@ -165,6 +172,40 @@ namespace VROOM.Controllers
                 var updatedEEItemDTO = await _employeeEquipmentItem.ReturnItem(EEItemDTOToBeReturned);
                 return updatedEEItemDTO;
             }
+        }
+
+        private void SendNotificationEmail(EmployeeEquipmentItemDTO EEItemDTO)
+        {
+            string equipmentItemName = EEItemDTO.EquipmentItem.Name;
+            string userEmail = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string sendEmail = _config["CorporateEmail"];
+            string firstName = User.Claims.First(x => x.Type == "FirstName").Value;
+            string lastName = User.Claims.First(x => x.Type == "LastName").Value;
+            switch (EEItemDTO.StatusId)
+            {
+                case (int)EmployeeEquipmentStatus.Borrowed:
+                    SendBorrowedNotificationEmail(equipmentItemName, userEmail, sendEmail, firstName, lastName);
+                    break;
+                case (int)EmployeeEquipmentStatus.Returned:
+                    SendReturnedNotificationEmail(equipmentItemName, userEmail, sendEmail, firstName, lastName);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private async void SendBorrowedNotificationEmail(string equipmentItemName, string userEmail, string sendEmail, string firstName, string lastName)
+        {
+            string emailSubject = $"Equipment Notification - {equipmentItemName} Borrowed by {userEmail}";
+            string emailHTMLBody = $"<p>This message is for {firstName} {lastName}</p><p>You've been marked in our Employee Equipment Item Manager (EEIM) system as having borrowed a {equipmentItemName}.</p><p>If you believe this is in error, please contact your manager.";
+            await _emailSenderService.SendEmailAsync(sendEmail, emailSubject, emailHTMLBody);
+        }
+
+        private async void SendReturnedNotificationEmail(string equipmentItemName, string userEmail, string sendEmail, string firstName, string lastName)
+        {
+            string emailSubject = $"Equipment Notification - {equipmentItemName} Returned by {userEmail}";
+            string emailHTMLBody = $"<p>This message is for {firstName} {lastName}</p><p>You've been marked in our Employee Equipment Item Manager (EEIM) system as having returned a {equipmentItemName}.</p><p>If you believe this is in error, please contact your manager.";
+            await _emailSenderService.SendEmailAsync(sendEmail, emailSubject, emailHTMLBody);
         }
     }
 }
