@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VROOM.Models;
 using VROOM.Models.DTOs;
 using VROOM.Models.Interfaces;
 using VROOM.ViewModels;
@@ -16,11 +17,13 @@ namespace VROOM.Controllers
     {
         private IEmployee _employee;
         private IEquipmentItem _equipmentItem;
+        private IEmployeeEquipmentItem _employeeEquipmentItem;
 
-        public DataController(IEmployee employee, IEquipmentItem equipmentItem)
+        public DataController(IEmployee employee, IEquipmentItem equipmentItem, IEmployeeEquipmentItem employeeEquipmentItem)
         {
             _employee = employee;
             _equipmentItem = equipmentItem;
+            _employeeEquipmentItem = employeeEquipmentItem;
         }
 
         // GET: EmployeeViewController
@@ -28,10 +31,12 @@ namespace VROOM.Controllers
         {
             var allEmployees = await _employee.GetEmployees();
             var allEquipment = await _equipmentItem.GetEquipmentItems();
+            var allEmployeeEquipment = await _employeeEquipmentItem.GetAllEmployeeEquipmentRecords();
             var allData = new AllData()
             {
                 EmployeeList = allEmployees,
-                EquipmentList = allEquipment
+                EquipmentList = allEquipment,
+                EmployeeEquipmentList = allEmployeeEquipment
             };
             return View(allData);
         }

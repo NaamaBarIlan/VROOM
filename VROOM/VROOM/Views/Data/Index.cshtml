@@ -20,32 +20,57 @@
 
 <body>
     <header>
+        <img src="~/images/logo_transparent.png" alt="logo" class="logo" />
         <h1>VROOM - Virtual Remote Open Office Manager</h1>
         <a href="Home">Home</a>
         <a href="Data">Data</a>
         <a href="About">About Us</a>
     </header>
     <main>
-        @*Razor Syntax*@
-
-        @foreach (var employee in Model.EmployeeList)
-        {
-            <h3>@employee.FirstName @employee.LastName</h3>
-            <p>Title: @employee.Title</p>
-            <p>Department: @employee.Dept</p>
-            <p>Status: @employee.Status</p>
-            <p>Branch: @employee.BranchName</p>
-            <hr />
-        }
-
-        @foreach (var equipment in Model.EquipmentList)
-        {
-            <h3>@equipment.Name</h3>
-            <p>Value: $@equipment.Value</p>
-        }
+        <div id="data">
+            <div>
+                @*Razor Syntax*@
+                <h2>Employees</h2>
+                @foreach (var employee in Model.EmployeeList)
+                {
+                    <h3>@employee.FirstName @employee.LastName</h3>
+                    <p>Id: @employee.Id</p>
+                    <p>Title: @employee.Title</p>
+                    <p>Email: @employee.Email</p>
+                    <p>Phone: @employee.Phone</p>
+                    <p>Department: @employee.Dept</p>
+                    <p>Status: @employee.Status</p>
+                    <p>Branch: @employee.BranchName</p>
+                    <hr />
+                }
+            </div>
+            <div>
+                <h2>Equipment Record</h2>
+                @foreach (var record in Model.EmployeeEquipmentList)
+                {
+                    <h3>Item: @record.EquipmentItem.Name</h3>
+                    <h3>Borrowed by: @record.Employee.FirstName @record.Employee.LastName</h3>
+                    <p>EmployeeId: @record.EmployeeId, EquipmentId: @record.EquipmentItemId</p>
+                    <p>StatusId: @record.StatusId, Status: @record.Status</p>
+                    <p>Date Borrowed: @record.DateBorrowed</p>
+                    <p>Date Returned: @record.DateReturned</p>
+                    <hr />
+                }
+            </div>
+            <div>
+                <h2>Equipment</h2>
+                @foreach (var equipment in Model.EquipmentList)
+                {
+                    <h3>@equipment.Name</h3>
+                    <p>Id: @equipment.Id</p>
+                    <p>Value: $@equipment.Value</p>
+                    <hr />
+                }
+            </div>
+        </div>
     </main>
     <footer>
-
+        <p>&copy; 2020 Team Tiramisu</p>
     </footer>
 </body>
 </html>
