@@ -48,8 +48,8 @@
                 <h2>Equipment Record</h2>
                 @foreach (var record in Model.EmployeeEquipmentList)
                 {
-                    <h3>Item: @record.EquipmentItem.Name</h3>
-                    <h3>Borrowed by: @record.Employee.FirstName @record.Employee.LastName</h3>
+                    <h3>@record.EquipmentItem.Name</h3>
+                    <p>Borrowed by: @record.Employee.FirstName @record.Employee.LastName</p>
                     <p>EmployeeId: @record.EmployeeId, EquipmentId: @record.EquipmentItemId</p>
                     <p>StatusId: @record.StatusId, Status: @record.Status</p>
                     <p>Date Borrowed: @record.DateBorrowed</p>
