@@ -4,8 +4,6 @@
 
 ---
 
-## Software Requirements
-
 ### Vision
 
 In a time when more and more companies are moving towards a remote work environment, they need new ways to organize.
@@ -53,6 +51,8 @@ There will be a controller for each entity implemented, which will take in a DTO
 Each controller will use dependency injection to access a service object which will perform the actual database operations, and return DTO data back to the controller. The controller will not have access to actual entity data, but will only work with DTOs.
 
 When a user signs in, they will create a token, and use that token to access the API data they have permission to access.
+
+---
 
 ### Non-Functional Requirements 
 
