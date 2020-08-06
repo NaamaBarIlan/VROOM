@@ -8,25 +8,25 @@
 
 ### Vision
 
-In a time when more and more companies are moving towards a remote work environment, they need new ways to organize. 
+In a time when more and more companies are moving towards a remote work environment, they need new ways to organize.
 
-VROOM makes it easier for small businesses to switch to all remote office operations, as people move towards unconventional work times.
+VROOM (Virtual Remote Open Office Manager) makes it easier for small businesses to switch to all remote office operations.
 
-VROOM offers companies the ability to track personnel flexible schedules more easily as well as keep an inventory on equipment that gets borrowed. 
+VROOM offers companies the ability to keep an inventory on equipment that gets borrowed as well as maintain a new registry of employees. 
 
 ### IN
-  * Allow an easy way to store employee’s varied schedules
   * Allow an easy way to track what office equipment employees have taken home
   * Allows a subset of users to create, update, and delete schedules, equipment, and their relationships to employees.
-  * Allows employees to set their own schedules.
+  * Allows emails to be sent automatically when employees are hired and when they check out office equipment
   
 ###  OUT
   * Won’t manage sales
   * Will not track expenses
   * Won’t manage the hiring process
+  * Won't track employee's schedules
 
 ###  Minimum Viable Product 
-* Able to view, update, create, and delete employee,  equipment, and employee-equipment as appropriate with the user’s permissions. 
+* Able to view, update, create, and delete employee, equipment, and employee-equipment as appropriate with the user’s permissions. 
 
 * Include unit tests for all application services. 
 
@@ -147,6 +147,13 @@ User stories can be found in this [link](https://trello.com/b/x6A2dKi8/vroom-401
 ## Change Log
 
 ##### 5 Aug 2020
+- 4.7: *Full front end implementation.*
+- 4.6: *More email methods implemented.*
+- 4.5: *Azure Deployment Mods.*
+- 4.4: *Added front end to the API.*
+- 4.3: *EEItem Tests Complete.*
+- 4.2: *Added and configured Swagger middleware in Startup.ConfigureServices and Startup.Configure. Installed Swashbuckle.AspNetCore Version 5.5.1*
+- 4.1: *Added Views, razor view for Index.*
 - 4.0: *Added Swagger UI via Swashbuckle.AspNetCore. It interprets Swagger JSON. It interprets Swagger JSONto build a rich, customizable experience for describing the web API functionality. It includes build-in test harnesses for public methods.*
 
 ##### 4 Aug 2020
