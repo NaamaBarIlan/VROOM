@@ -16,7 +16,7 @@ VROOM offers companies the ability to keep an inventory on equipment that gets b
 
 ### IN
   * Allow an easy way to track what office equipment employees have taken home
-  * Allows a subset of users to create, update, and delete schedules, equipment, and their relationships to employees.
+  * Allows a subset of users to create, update, and delete equipment items, and their relationships to employees
   * Allows emails to be sent automatically when employees are hired and when they check out office equipment
   
 ###  OUT
