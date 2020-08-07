@@ -146,6 +146,14 @@ User stories can be found in this [link](https://trello.com/b/x6A2dKi8/vroom-401
 
 ## Change Log
 
+##### 6 Aug 2020
+- 5.5: *Changes to project file.*
+- 5.4: *Form validation, split up login and register into separate pages.*
+- 5.3: *Added an updated ERD and UMD images to Assets.*
+- 5.2: *EmployeeEquipmentItem Status Rework.*
+- 5.1: *Updated Startup.cs to include the JWT token in the SwaggerUI.*
+- 5.0: *Partial email implementation for EmployeeEquipmentItems.*
+
 ##### 5 Aug 2020
 - 4.7: *Full front end implementation.*
 - 4.6: *More email methods implemented.*
