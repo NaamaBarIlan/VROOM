@@ -295,6 +295,15 @@ namespace VROOM.Models.Services
             return EEItemDTOs;
         }
 
+        /// <summary>
+        /// Inserts the corresponding EquipmentItemDTO into an EmployeeEquipmentItemDTO and returns that EmployeeEquipmentItemDTO.
+        /// </summary>
+        /// <param name="EEItemDTO">
+        /// EmployeeEquipmentItemDTO: an EmployeeEquipmentItemDTO missing an embedded EquipmentItemDTO
+        /// </param>
+        /// <returns>
+        /// EmployeeEquipmentItemDTO: an EmployeeEquipmentItemDTO with its corresponding EquipmentItemDTO embedded
+        /// </returns>
         private async Task<EmployeeEquipmentItemDTO> AddEquipmentItem(EmployeeEquipmentItemDTO EEItemDTO)
         {
             EEItemDTO.EquipmentItem = await _equipmentItem.GetEquipmentItem(EEItemDTO.EquipmentItemId);
