@@ -1,0 +1,90 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@*Declaring this page to use a list of employees*@
+@model VROOM.ViewModels.AllData
+
+<!Doctype html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/Styles/reset.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/Styles/style.css" type="text/css" />
+    <title>VROOM App</title>
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="~/images/logo_transparent.png" alt="logo" class="logo" />
+        </div>
+        <div>
+
+        </div>
+        <div>
+            <h1>VROOM</h1>
+        </div>
+        <div>
+        </div>
+        <div>
+            <a href="Home">Home</a>
+            <a href="Login">Login</a>
+            <a href="Data">Data</a>
+            <a href="About">About</a>
+        </div>
+    </header>
+    <main>
+        <h2>Data Portal</h2>
+        <a href="Register">Register a new user</a>
+        <div id="data">
+            <div>
+                @*Razor Syntax*@
+                <h2>Employees</h2>
+                @foreach (var employee in Model.EmployeeList)
+                {
+                    <h3>@employee.FirstName @employee.LastName</h3>
+                    <p>Id: @employee.Id</p>
+                    <p>Title: @employee.Title</p>
+                    <p>Email: @employee.Email</p>
+                    <p>Phone: @employee.Phone</p>
+                    <p>Department: @employee.Dept</p>
+                    <p>Status: @employee.Status</p>
+                    <p>Branch: @employee.BranchName</p>
+                    <hr />
+                }
+            </div>
+            <div>
+                <h2>Equipment Record</h2>
+                @foreach (var record in Model.EmployeeEquipmentList)
+                {
+                    <h3>@record.EquipmentItem.Name</h3>
+                    <p>Borrowed by: @record.Employee.FirstName @record.Employee.LastName</p>
+                    <p>EmployeeId: @record.EmployeeId, EquipmentId: @record.EquipmentItemId</p>
+                    <p>StatusId: @record.StatusId, Status: @record.Status</p>
+                    <p>Date Borrowed: @record.DateBorrowed</p>
+                    <p>Date Record Closed: @record.DateRecordClosed</p>
+                    <hr />
+                }
+            </div>
+            <div>
+                <h2>Equipment</h2>
+                @foreach (var equipment in Model.EquipmentList)
+                {
+                    <h3>@equipment.Name</h3>
+                    <p>Id: @equipment.Id</p>
+                    <p>Value: $@equipment.Value</p>
+                    <hr />
+                }
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2020 Team Tiramisu</p>
+    </footer>
+</body>
+</html>
