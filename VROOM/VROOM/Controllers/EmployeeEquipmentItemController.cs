@@ -164,6 +164,12 @@ namespace VROOM.Controllers
             }
         }
 
+        /// <summary>
+        /// Private method. Sends en email notification when en EmployeeEquipmentItemDTO is created or updated.
+        /// </summary>
+        /// <param name="EEItemDTO">
+        /// EmployeeEquipmentItemDTO: an EmployeeEquipmentItemDTO whose status will determine which email to send
+        /// </param>
         private void SendNotificationEmail(EmployeeEquipmentItemDTO EEItemDTO)
         {
             string equipmentItemName = EEItemDTO.EquipmentItem.Name;
@@ -191,6 +197,24 @@ namespace VROOM.Controllers
             }
         }
 
+        /// <summary>
+        /// Sends a notification email for when an EquipmentItem is borrowed.
+        /// </summary>
+        /// <param name="equipmentItemName">
+        /// string: the name of the EquipmentItem being borrowed
+        /// </param>
+        /// <param name="userEmail">
+        /// string: the email of the user the update is on behalf of
+        /// </param>
+        /// <param name="sendEmail">
+        /// string: the email the notification will be sent to
+        /// </param>
+        /// <param name="firstName">
+        /// string: the first name of the user the update is on behalf of
+        /// </param>
+        /// <param name="lastName">
+        /// string: the last name of the user the update is on behalf of
+        /// </param>
         private async void SendBorrowedNotificationEmail(string equipmentItemName, string userEmail, string sendEmail, string firstName, string lastName)
         {
             string emailSubject = $"Equipment Notification - {equipmentItemName} Borrowed by {userEmail}";
@@ -198,6 +222,24 @@ namespace VROOM.Controllers
             await _emailSenderService.SendEmailAsync(sendEmail, emailSubject, emailHTMLBody);
         }
 
+        /// <summary>
+        /// Sends a notification email for when an EquipmentItem is returned.
+        /// </summary>
+        /// <param name="equipmentItemName">
+        /// string: the name of the EquipmentItem being returned
+        /// </param>
+        /// <param name="userEmail">
+        /// string: the email of the user the update is on behalf of
+        /// </param>
+        /// <param name="sendEmail">
+        /// string: the email the notification will be sent to
+        /// </param>
+        /// <param name="firstName">
+        /// string: the first name of the user the update is on behalf of
+        /// </param>
+        /// <param name="lastName">
+        /// string: the last name of the user the update is on behalf of
+        /// </param>
         private async void SendReturnedNotificationEmail(string equipmentItemName, string userEmail, string sendEmail, string firstName, string lastName)
         {
             string emailSubject = $"Equipment Notification - {equipmentItemName} Returned by {userEmail}";
@@ -205,6 +247,24 @@ namespace VROOM.Controllers
             await _emailSenderService.SendEmailAsync(sendEmail, emailSubject, emailHTMLBody);
         }
 
+        /// <summary>
+        /// Sends a notification email for when an EquipmentItem is sold.
+        /// </summary>
+        /// <param name="equipmentItemName">
+        /// string: the name of the EquipmentItem being sold
+        /// </param>
+        /// <param name="userEmail">
+        /// string: the email of the user the update is on behalf of
+        /// </param>
+        /// <param name="sendEmail">
+        /// string: the email the notification will be sent to
+        /// </param>
+        /// <param name="firstName">
+        /// string: the first name of the user the update is on behalf of
+        /// </param>
+        /// <param name="lastName">
+        /// string: the last name of the user the update is on behalf of
+        /// </param>
         private async void SendSoldNotificationEmail(string equipmentItemName, string userEmail, string sendEmail, string firstName, string lastName)
         {
             string emailSubject = $"Equipment Notification - {equipmentItemName} Sold by {userEmail}";

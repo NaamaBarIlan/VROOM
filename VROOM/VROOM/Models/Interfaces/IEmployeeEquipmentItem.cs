@@ -112,26 +112,31 @@ namespace VROOM.Models.Interfaces
         Task<bool> CheckIfItemIsAvailable(int equipmentItemId);
 
         /// <summary>
-        /// Public helper method. Gets a List of EmployeeEquipmentItemDTOs that are available for a given EmployeeDTO and EquipmentItemDTO id for updating.
-        /// Should only ever return a List with 0 or 1 items in it.
+        /// Gets a returnable item for a given employeeId and equipmentId. Returns null if there is no returnable item for that combination.
         /// </summary>
         /// <param name="employeeId">
-        /// int: an EmployeeDTO id
+        /// int: an employeeId
         /// </param>
         /// <param name="equipmentItemId">
-        /// int: an EquipmentItemDTO id
+        /// int: an equipmentId
         /// </param>
         /// <returns>
-        /// List<EmployeeEquipmentItemDTO>: a list of DTOs, should only have .Count 0 or 1
+        /// EmployeeEquipmentItemDTO: a returnable DTO
         /// </returns>
-        //Task<List<EmployeeEquipmentItemDTO>> ListOfUpdatableItemsFor(int employeeId, int equipmentItemId);
-
-        //Task<bool> CheckIfItemIsUpdatable(int equipmentItemId);
-
-        //Task<bool> CheckIfItemIsReturnable(int employeeId, int equipmentItemId);
-
         Task<EmployeeEquipmentItemDTO> GetReturnableItem(int employeeId, int equipmentItemId);
 
+        /// <summary>
+        /// Gets an unpdatable item for a given employeeId and equipmentId. Returns null if there is no updatable item for that combination.
+        /// </summary>
+        /// <param name="employeeId">
+        /// int: an employeeId
+        /// </param>
+        /// <param name="equipmentItemId">
+        /// int: an equipmentId
+        /// </param>
+        /// <returns>
+        /// EmployeeEquipmentItemDTO: a undatable DTO
+        /// </returns>
         Task<EmployeeEquipmentItemDTO> GetUpdatableItem(int employeeId, int equipmentItemId);
     }
 }
