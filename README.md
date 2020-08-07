@@ -2,6 +2,10 @@
 
 ## Virtual Regional Open Office Manager
 
+[View the deployed site](https://vroom-app.azurewebsites.net/)
+
+[View the API via SwaggerUI](https://vroom-app.azurewebsites.net/swagger/index.html)
+
 ---
 
 ### Vision
